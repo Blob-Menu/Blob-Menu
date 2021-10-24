@@ -1,7 +1,20 @@
 
 local PANEL = {}
 
+function PANEL:ShowBackButton(id, t)
+    if t == nil then
+        t = self.backshow[id]
+    end
+
+    self.backshow[id] = t
+    self.top:RunJavascript([[
+        document.documentElement.style.setProperty("--back-display", "]] .. (t and "all" or "none") .. [[");
+    ]])
+end
+
 function PANEL:Init()
+    menu.multiplayer = self
+    self.backshow = {}
     self.gms = vgui.Create("Menu:Pages:Multiplayer:Gamemodes", self)
 
     -- top stuff:
@@ -10,6 +23,15 @@ function PANEL:Init()
     self.top:AddFunction("blob", "ChangeType", function(type)
         self.gms:GenerateTab(type)
     end )
+    self.top:AddFunction("blob", "test", function(s)
+        print(type(s), ":", s)
+    end)
+    self.top:AddFunction("blob", "RunBackbuttonFunction", function()
+        local tab = self.gms:GetActiveTab()
+
+        if not tab.DoBack then return end
+        self:ShowBackButton(tab.id, tab:DoBack())
+    end)
     self.top:SetHTML([[
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Poppins");
@@ -17,6 +39,7 @@ function PANEL:Init()
                 --accent:rgb(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[);
                 --accent-transparent:rgba(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[, 0.6);
                 --background:rgb(]] .. menu.colors.background.r .. "," .. menu.colors.background.g .. "," .. menu.colors.background.b .. [[);
+                --back-display:none;
             }
 
             body {
@@ -38,6 +61,7 @@ function PANEL:Init()
                 border-color:#2e2e2e;
                 border-width:2px;
 
+                margin-left:auto;
                 font-family:"Poppins";
                 transition: border-color 0.2s;
 
@@ -66,8 +90,11 @@ function PANEL:Init()
                 user-select:none;
                 margin-top:auto;
                 margin-bottom:auto;
-                margin-right:auto;
                 background:var(--background);
+            }
+
+            .types > div:first-child {
+                border-left:none;
             }
 
             .types > div {                
@@ -84,6 +111,10 @@ function PANEL:Init()
                 transition:border-bottom-width 0.2s, border-bottom-color 0.2s;
                 padding-left:20px;
                 padding-right:20px;
+    
+                border-left-style:solid;
+                border-left-width:1px;
+                border-color:rgba(255,255,255,0.1);
             }
 
             .types > div:hover {
@@ -96,10 +127,36 @@ function PANEL:Init()
                 border-bottom-color:var(--accent);
                 border-bottom-width:50px;
             }
+
+            .back-button {
+                display:var(--back-display);
+                height:50px;
+                border-radius:10px 10px 5px 5px;
+                margin-top:auto;
+                margin-bottom:auto;
+                background:var(--background);
+                padding-left:20px;
+                padding-right:20px;
+                vertical-align:center;
+                line-height:50px;
+                margin-right:10px;
+                border-width:2px;
+                border-color:#2e2e2e;
+                border-style:solid;
+                user-select:none;
+                transition:background 0.2s;
+                cursor: pointer;
+            }
+
+            .back-button:hover {
+                background:var(--accent);
+            }
+
         </style>
 
-        <input type="text" id="search" placeholder="Search Servers...">
-    
+
+        <input type="text" id="search" placeholder="Search Servers...">    
+
         <div class="types" id="types">
             <div class="active" id="internet" onclick="ct('internet')">Internet</div>
             <div id="favorite" onclick="ct('favorite')">Favorites</div>
@@ -107,6 +164,8 @@ function PANEL:Init()
             <div id="lan" onclick="ct('lan')">LAN</div>
             <div id="blacklisted" onclick="ct('blacklisted')">Blacklisted</div>
         </div>
+        
+        <div class="back-button" onclick="blob.RunBackbuttonFunction()"> &lt; Back</div>
 
         <script>
             function ct(type) {

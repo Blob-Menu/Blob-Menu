@@ -24,6 +24,8 @@ function PANEL:AddButton(...)
         self.PaintButton(s, w, h, b.values)
     end
 
+    self:OnAdd(b, ...)
+
     table.insert(self.buttons, b)
     return b
 end
@@ -38,6 +40,10 @@ function PANEL:DoClick(...)
 end
 
 function PANEL:PaintButton(w, h)
+
+end
+
+function PANEL:OnAdd(b)
 
 end
 

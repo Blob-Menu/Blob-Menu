@@ -1,5 +1,11 @@
 
+surface.CreateFont("Menu:GamemodeTag", {
+    font = "Poppins",
+    size = 25
+})
+
 local PANEL = {}
+local errmat = Material("gamemodes/base/icon24.png")
 
 function PANEL:Init()
     self.gamemodes = {}
@@ -14,18 +20,17 @@ end
 
 function PANEL:PaintButton(w,h,args)
     local curx = h / 4
-    if args[1].icon then
-        curx = h
-        surface.SetMaterial(args[1].icon)
-        surface.SetDrawColor(color_white)
-        surface.DrawTexturedRect(12, 12, h - 24, h - 24)
-    end
+    curx = h
+    surface.SetMaterial(args[1].icon or errmat)
+    surface.SetDrawColor(color_white)
+    surface.DrawTexturedRect(h / 2 - (32 / 2), h / 2 - (32 / 2), 32, 32)
 
-    draw.Text({
+    local textw, texth = draw.Text({
         text = args[1].name,
         pos = {curx, h / 2},
         yalign = 1,
-        font = "Menu:ServerName"
+        font = "Menu:ServerName",
+        color = menu.colors.text
     })
 
     draw.Text({
@@ -33,8 +38,29 @@ function PANEL:PaintButton(w,h,args)
         pos = {w - h / 2, h / 2},
         xalign = 2,
         yalign = 1,
-        font = "Menu:ServerInfo"
+        font = "Menu:ServerInfo",
+        color = menu.colors.text2
     })
+
+    local tag = args[2]
+    if tag then
+        local tagw,tagh = surface.GetTextSize(tag)
+        surface.SetFont("Menu:GamemodeTag")
+        surface.SetDrawColor(menu.colors.accent1)
+        surface.DrawRect(h + textw + 5, h / 2 - tagh / 2, tagw + 20, tagh)
+
+        draw.Text({
+            text = tag,
+            pos = {h + textw + 15, h / 2 + 1},
+            yalign = 1,
+            font = "Menu:GamemodeTag",
+            color = menu.colors.text2
+        })
+    end
+end
+
+function PANEL.GetGamemodeTag(gm)
+    return menu.gamemode_tags[gm] or ((string.find(gm:lower(), "rp") or string.find(gm:lower(), "roleplay")) and "Roleplay")
 end
 
 function PANEL.DoClickReal(rs, s, args)
@@ -45,9 +71,9 @@ function PANEL.DoClickReal(rs, s, args)
     for k,v in pairs(args.members) do
         tab:AddButton(v, rs.tabs)
     end
-    tab.loading = false
 
-    menu.PushBottomBarTab("back-server")
+    tab:Sort()
+    tab.loading = false
 end
 
 function PANEL.QueryCallback(rs, s, ...)
@@ -87,7 +113,7 @@ function PANEL.QueryCallback(rs, s, ...)
 
     rs.loadamt = rs.loadamt + 1
     rs.loading = false
-    rs.buttons[args.gm] = rs:AddButton(rs.gamemodes[args.gm])
+    rs.buttons[args.gm] = rs:AddButton(rs.gamemodes[args.gm], PANEL.GetGamemodeTag(args.gm))
 end
 
 vgui.Register("Menu:Pages:Multiplayer:GamemodesList", PANEL, "Menu:Pages:Multiplayer:GeneralList")

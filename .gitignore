@@ -71,3 +71,5 @@ lua/menu/mplugins
 *.res
 *.pcf
 *.ver
+*.cache
+*.pack

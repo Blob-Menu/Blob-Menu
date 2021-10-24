@@ -91,7 +91,8 @@ function PANEL:Paint(w,h)
             h / 2 - 4
         },
         xalign = 1,
-        yalign = 1
+        yalign = 1,
+        color = menu.colors.text
     })
 end
 

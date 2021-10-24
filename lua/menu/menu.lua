@@ -38,12 +38,12 @@ local function loadDirectory(dir)
     end
 end
 
-loadDirectory("menu/blob-menu")
-menu.Create()
-
 concommand.Add("blob_menu_refresh", function()
     loadDirectory("menu/blob-menu")
     menu.panel:Remove()
     menu.Create()
     gui.ShowConsole()
 end )
+
+loadDirectory("menu/blob-menu")
+menu.Create()

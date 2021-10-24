@@ -32,13 +32,13 @@ function PANEL:SetTab(id)
         return self.tabs[id]
     end
 
-    self:OnChanged()
-
     local new = self.tabs[id]
     new:SetAlpha(0)
     new:SetVisible(true)
     new:AlphaTo(255, 0.2)
-
+    new.id = id
+    
+    self:OnChanged(id)
     self:SetActiveTab(new)
 
     return new

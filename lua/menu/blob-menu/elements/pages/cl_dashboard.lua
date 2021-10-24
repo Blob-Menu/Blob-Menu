@@ -46,21 +46,21 @@ function PANEL:Init()
 
     self.center.buttons = vgui.Create("Panel", self.center)
     self.center.buttons:Dock(TOP)
-    self.center.buttons:SetTall(0)
+    self.center.buttons:SetTall(IsInGame() and 50 or 0)
     self.center.buttons.resume = vgui.Create("DButton", self.center.buttons)
     self.center.buttons.resume:SetText("")
-    self.center.buttons.resume:SetVisible(false)
+    self.center.buttons.resume:SetVisible(IsInGame())
     self.center.buttons.resume.DoClick = gui.HideGameUI
 
     function self.center.buttons.resume:Paint(w, h)
-        if self:IsHovered() then
-            self.olwid = Lerp(FrameTime() * 10, self.olwid or h / 2 + 2, h / 2 + 2)
-        else
-            self.olwid = Lerp(FrameTime() * 10, self.olwid or 2, 2)
-        end
+        local hov = self:IsHovered()
+        self.olwid = Lerp(FrameTime() * 10, self.olwid or 0, hov and h or 0)
+        self.textcol = menu.LerpColor(FrameTime() * 10, self.textcol or menu.colors.text, hov and menu.colors.text or menu.colors.accent2)
 
         surface.SetDrawColor(menu.colors.accent1)
-        surface.DrawOutlinedRect(0, 0, w, h, self.olwid)
+        surface.DrawOutlinedRect(0, 0, w, h, 2)
+        surface.SetDrawColor(menu.colors.accent2)
+        surface.DrawRect(0, h - self.olwid, w, h)
 
         local tw = draw.Text({
             text = "Resume",
@@ -68,7 +68,7 @@ function PANEL:Init()
             font = "Menu:Dashboard:Buttons",
             xalign = 1,
             yalign = 1,
-            color = menu.colors.text
+            color = self.textcol
         })
 
         tw = tw + 20
@@ -79,6 +79,7 @@ function PANEL:Init()
     end
 
     function self.center.buttons:InGameChanged(t)
+        print(t)
         self:SetTall(t and 50 or 0)
         self.resume:SetVisible(t)
     end
