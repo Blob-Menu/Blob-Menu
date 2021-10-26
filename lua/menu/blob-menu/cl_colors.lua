@@ -10,7 +10,7 @@ menu.colors = {
     bottom_bg = Color(0,0,0,40),
     textentry_outline_selected = Color(255, 255, 255, 255 * .6),
     textentry_outline = Color(255, 255, 255, 255 * .3),
-    server_background = Color(35,35,35,252)
+    server_background = Color(35,35,35,252),
 }
 
 menu.colors.accent2 = ColorAlpha(menu.colors.accent1, 89)

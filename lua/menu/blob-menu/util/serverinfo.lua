@@ -1,7 +1,7 @@
 
 menu.serverinfo_default = {
     ["description"] = "No Description Found",
-    ["background-image"] = false,
+    ["image"] = false,
     ["tags"] = {},
     ["features"] = {}
 }

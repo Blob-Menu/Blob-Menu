@@ -47,46 +47,60 @@ function PANEL:Init()
     self.center.buttons = vgui.Create("Panel", self.center)
     self.center.buttons:Dock(TOP)
     self.center.buttons:SetTall(IsInGame() and 50 or 0)
-    self.center.buttons.resume = vgui.Create("DButton", self.center.buttons)
-    self.center.buttons.resume:SetText("")
-    self.center.buttons.resume:SetVisible(IsInGame())
-    self.center.buttons.resume.DoClick = gui.HideGameUI
 
-    function self.center.buttons.resume:Paint(w, h)
-        local hov = self:IsHovered()
-        self.olwid = Lerp(FrameTime() * 10, self.olwid or 0, hov and h or 0)
-        self.textcol = menu.LerpColor(FrameTime() * 10, self.textcol or menu.colors.text, hov and menu.colors.text or menu.colors.accent2)
+    function self.center.buttons:AddButton(text, on, show_ingame)
+        local b = vgui.Create("DButton", s)
+        b:SetText("")
+        b:SetVisible(IsInGame())
+        b.DoClick = on
+        b.ShowIngame = show_ingame
 
-        surface.SetDrawColor(menu.colors.accent1)
-        surface.DrawOutlinedRect(0, 0, w, h, 2)
-        surface.SetDrawColor(menu.colors.accent2)
-        surface.DrawRect(0, h - self.olwid, w, h)
+        function b:Paint(w, h)
+            local hov = self:IsHovered()
+            self.olwid = Lerp(FrameTime() * 10, self.olwid or 0, hov and h or 0)
+            self.textcol = menu.LerpColor(FrameTime() * 10, self.textcol or menu.colors.text, hov and menu.colors.text or menu.colors.accent2)
 
-        local tw = draw.Text({
-            text = "Resume",
-            pos = {w / 2, h / 2 + 2},
-            font = "Menu:Dashboard:Buttons",
-            xalign = 1,
-            yalign = 1,
-            color = self.textcol
-        })
+            surface.SetDrawColor(menu.colors.accent1)
+            surface.DrawOutlinedRect(0, 0, w, h, 2)
+            surface.SetDrawColor(menu.colors.accent2)
+            surface.DrawRect(0, h - self.olwid, w, h)
 
-        tw = tw + 20
-        if self.textw != tw then
-            self.textw = tw
-            self:SetWide(self.textw)
+            local tw = draw.Text({
+                text = text,
+                pos = {w / 2, h / 2 + 2},
+                font = "Menu:Dashboard:Buttons",
+                xalign = 1,
+                yalign = 1,
+                color = self.textcol
+            })
+
+            tw = tw + 20
+            if self.textw != tw then
+                self.textw = tw
+                self:SetWide(self.textw)
+            end
+        end
+
+        return b
+    end
+
+    self.center.buttons:AddButton("Disconnect", function()
+        RunGameUICommand("disconnect")
+    end, true)
+    self.center.buttons:AddButton("Resume", gui.HideGameUI, true)
+
+    function self.center.buttons:InGameChanged(t)
+        self:SetTall(t and 50 or 0)
+
+        for k,v in pairs(self:GetChildren()) do
+            v:SetVisible((v.show_ingame and t) or false)
         end
     end
 
-    function self.center.buttons:InGameChanged(t)
-        print(t)
-        self:SetTall(t and 50 or 0)
-        self.resume:SetVisible(t)
-    end
-
     function self.center.buttons:PerformLayout(w, h)
-        self.resume:SetTall(h)
-        self.resume:Dock(LEFT)
+        for k,v in pairs(self:GetChildren()) do
+            v:Dock(LEFT)
+        end
     end
 end
 

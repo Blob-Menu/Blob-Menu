@@ -16,6 +16,7 @@ function menu.Download(url, dir, done, err)
     end, err)
 end
 
+-- UNTESTED:
 local imgcache = {}
 local imgcache_file
 function menu.Image(url, done)

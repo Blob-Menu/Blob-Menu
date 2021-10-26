@@ -74,6 +74,9 @@ function PANEL.DoClickReal(rs, s, args)
 
     tab:Sort()
     tab.loading = false
+    tab.args = args
+
+    rs.active_thing = tab
 end
 
 function PANEL.QueryCallback(rs, s, ...)
@@ -85,23 +88,28 @@ function PANEL.QueryCallback(rs, s, ...)
     rs.loadamt = rs.loadamt + 1
 
     local args = serverlist.Args2Table(...)
-    rs.gamemodes[args.gm] = rs.gamemodes[args.gm] or {
+    rs.gamemodes[args.desc] = rs.gamemodes[args.desc] or {
         name = args.desc,
         count = 0,
         ply_count = 0,
         members = {},
         args = args,
-        icon = file.Exists("gamemodes/" .. args.gm .. "/icon24.png", "GAME") and Material("gamemodes/" .. args.gm .. "/icon24.png")
+        icon = file.Exists("gamemodes/" .. args.desc .. "/icon24.png", "GAME") and Material("gamemodes/" .. args.desc .. "/icon24.png")
     }
-    rs.gamemodes[args.gm].count = rs.gamemodes[args.gm].count + 1
-    rs.gamemodes[args.gm].ply_count = rs.gamemodes[args.gm].ply_count + args.players
+    rs.gamemodes[args.desc].count = rs.gamemodes[args.desc].count + 1
+    rs.gamemodes[args.desc].ply_count = rs.gamemodes[args.desc].ply_count + args.players
 
-    table.insert(rs.gamemodes[args.gm].members, args)
+    table.insert(rs.gamemodes[args.desc].members, args)
+    if rs.active_thing and (rs.active_thing.args.name == args.desc) then
+        rs.active_thing:AddButton(args, rs.tabs)
+        rs.active_thing:Sort()
+    end
+
     rs.last_updated = SysTime()
 
-    if rs.buttons[args.gm] then
-        rs.buttons[args.gm].ply_count = rs.gamemodes[args.gm].ply_count
-        rs.buttons[args.gm].count = rs.gamemodes[args.gm].count
+    if rs.buttons[args.desc] then
+        rs.buttons[args.desc].ply_count = rs.gamemodes[args.desc].ply_count
+        rs.buttons[args.desc].count = rs.gamemodes[args.desc].count
     end
 
     if rs.loadamt % 20 == 0 then
@@ -109,11 +117,11 @@ function PANEL.QueryCallback(rs, s, ...)
             v:SetZPos(-((v.ply_count or 0) + 1))
         end
     end
-    if rs.buttons[args.gm] or rs.loadamt <= 100 then return end
+    if rs.buttons[args.desc] or rs.loadamt <= 100 then return end
 
     rs.loadamt = rs.loadamt + 1
     rs.loading = false
-    rs.buttons[args.gm] = rs:AddButton(rs.gamemodes[args.gm], PANEL.GetGamemodeTag(args.gm))
+    rs.buttons[args.desc] = rs:AddButton(rs.gamemodes[args.desc], PANEL.GetGamemodeTag(args.desc))
 end
 
 vgui.Register("Menu:Pages:Multiplayer:GamemodesList", PANEL, "Menu:Pages:Multiplayer:GeneralList")

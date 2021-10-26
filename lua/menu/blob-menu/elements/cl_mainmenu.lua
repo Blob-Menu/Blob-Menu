@@ -8,14 +8,8 @@ function PANEL:Init()
     self.html = vgui.Create("DHTML", self)
     self.html:SetHTML([[
         <style>
-        :root{
-            --accent:rgb(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[);
-            --accent-transparent:rgba(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[, .3);
-        }
-        body {
-            padding:0;
-            margin:0;
-        }
+        ]] .. menu.html.BaseCSS() .. [[
+
         svg {
             position:absolute;
             width:100%;

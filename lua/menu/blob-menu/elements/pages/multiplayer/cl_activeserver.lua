@@ -2,26 +2,196 @@
 local PANEL = {}
 
 function PANEL:Init()
-    self.left = vgui.Create("DPanel", self)
-    self.mid = vgui.Create("DPanel", self)
-    self.right = vgui.Create("DPanel", self)
+    self.serverinfo = {}
+    self.serverdata = {}
+    self.html = vgui.Create("DHTML", self)
+    self.html:AddFunction("blob", "Join", function()
+        JoinServer(self.serverdata.ip)
+    end )
 end
 
 function PANEL:PerformLayout(w,h)
-    self.left:SetSize(w / 5, h)
+    self.html:SetSize(w, h)
+    self.html:SetPos(0, 0)
+end
 
-    self.right:SetSize(w / 5, h)
-    self.right:SetPos(w - self.right:GetWide(), 0)
+function PANEL:FormatPlayers(plys)
+    local toret = ""
 
-    self.mid:SetPos(w / 5, 0)
-    self.mid:SetSize(w - (w / 5 * 2), h)
+    for k,v in pairs(plys) do
+        toret = toret .. [[<div class="player">]] .. v.name .. [[</div>]]
+    end
+
+    -- toret = string.rep("<div class=\"player\">This is a players name blah blah blah</div>", 100)
+
+    return toret
 end
 
 function PANEL:UpdateServer(args)
+    self:UpdateHTML(false, args, "")
+    self.serverdata = args
+
     menu.GetServerInfo("1.1.1.1:69696"--[[ args.ip ]], function(d)
-        _p(d)
-        print("Completely done with updating server")
+        self.serverinfo = d
+        if self.playerhtml then
+            self:UpdateHTML(self.serverinfo, args, self.playerhtml)
+        end
     end )
+
+    serverlist.PlayerList(args.ip, function(plys)
+        self.playerhtml = self:FormatPlayers(plys)
+
+        if self.serverinfo then
+            self:UpdateHTML(self.serverinfo, args, self.playerhtml)
+        end
+    end )
+end
+
+function PANEL:UpdateHTML(server, args, plyhtml)
+    self.html:SetHTML(menu.templates.Render([[
+        <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins");
+        {{basecss}}
+    
+        body {
+            display: flex;
+            flex-direction: row;
+            color:var(--text);
+            font-family:"Poppins";
+            overflow:hidden;
+        }
+    
+        .mid {
+            margin:5px;
+            padding:15px;
+            flex-grow:2;
+            overflow: hidden;
+            border-radius:15px;
+            background:{{background_col}};
+        }
+
+        .mid > .title {
+            text-align:center;
+            font-size:30px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width:100%;
+        }
+
+        .mid > .title:after {
+            content: "";
+            display:block;
+            width:100%;
+            height:1px;
+            background-color:var(--text2);
+        }
+
+        .mid > .description {
+            font-size:20px;
+        }
+
+   
+        .left {
+            min-width:20%;
+            color:var(--text);
+            margin:5px;
+            padding:15px;
+            flex-grow:1;
+            border-radius:15px;
+            background:{{background_col}};
+            max-height:95%;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .left > .header {
+            height:20%;
+            background: url({{server.image}});
+            background-size:cover;
+            background-position: center top;
+            border-radius:15px;
+            flex-shrink: 0;
+        }
+
+        .left > .players {
+            flex-grow:1;
+            max-height:73%;
+            overflow-y:auto;
+            margin:0px;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .left > .players::-webkit-scrollbar {
+            width:7px;
+            border-radius:4px;
+            background:var(--background);
+        }
+
+        .left > .players::-webkit-scrollbar-thumb {
+            width:5px;
+            margin:1px;
+            border-radius:4px;
+            background:var(--accent1);
+        }
+
+        .left > .players > .player {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin:5px;
+        }
+
+        .left > .join {
+            display:flex;
+            flex-shrink: 0;
+
+            height:7%;
+            background:linear-gradient(45deg, var(--accent1) 0%, var(--accent_dark) 100%);
+
+            text-align:center;
+            font-size:30px;
+            border-radius:15px;
+
+            user-select:none;
+            cursor:pointer;
+
+            transition: text-shadow 0.2s;
+        }
+
+        .left > .join > .inner {
+            margin:auto;
+        }
+
+        .left > .join:hover {
+            text-shadow: 2px 2px 5px #000;
+        }
+    </style>
+    
+    <div class="left">
+        <div class="header"></div>
+        <div class="players">
+            {{players}}
+        </div>
+        <div class="join" onclick="blob.Join()">
+            <div class="inner">Join</div>
+        </div>
+    </div>
+    
+    <div class="mid">
+        <div class="title">{{args.name}}</div>
+        <div class="description">{{server.description}}</div>
+    </div>
+    
+    ]], {
+        colors = menu.colors,
+        basecss = menu.html.BaseCSS(),
+        server = server or {},
+        args = args,
+        background_col = menu.html.Color(ColorAlpha(menu.LerpColor(0.6, menu.colors.accent1, color_black), 100)),
+        players = plyhtml
+    }))
 end
 
 vgui.Register("Menu:Pages:Multiplayer:ActiveServer", PANEL, "Panel")
