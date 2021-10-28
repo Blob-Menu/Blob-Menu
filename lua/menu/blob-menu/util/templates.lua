@@ -73,27 +73,3 @@ function menu.templates.Render(str, values)
     end )
     return x
 end
-
--- print(menu.templates.Render([[
--- whatever.value {{whatever.value}}
--- whatever {{whatever}}
--- whatever.nested {{whatever.nested}}
--- whatever.nested.1 {{whatever.nested.1}}
--- whatever.nested.baLLs {{whatever.nested.baLLs}}
-
--- {{
--- if whatever.nested.1:
---     this is yes
--- else:
---     this is no
--- }}
-
--- ]], {
---     whatever = {
---         value = 123,
---         nested = {
---             true,
---             baLLs = false
---         }
---     }
--- }))
