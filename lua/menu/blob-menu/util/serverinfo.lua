@@ -1,9 +1,16 @@
 
 menu.serverinfo_mega_default = {
-    ["description"] = "No Server Description",
-    ["image"] = "",
-    ["tags"] = {},
-    ["features"] = {}
+    description     = "No Server Description",
+    image           = "",
+    tags            = {},
+    features        = {}
+}
+
+menu.serverinfo_lan_default = {
+    description     = "LAN Server",
+    image           = "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fassets.vg247.com%2Fcurrent%2F2014%2F09%2Fgarrys_mod_face.jpg&f=1&nofb=1",
+    tags            = {},
+    features        = {}
 }
 
 local info_cache
@@ -23,7 +30,7 @@ function menu.GetServerInfo(ip, done)
 
         info_cache:Set(ip, dat)
     end, function()
-        done(menu.serverinfo_default)
+        done(menu.serverinfo_mega_default)
     end )
 end
 

@@ -8,6 +8,7 @@ concommand.Add("blob_menu_clearcaches", function()
     for k,v in pairs(menu.caches) do
         file.Delete(v.filename)
     end
+    print("[BlobMenu] Caches Cleared! Please restart")
 end )
 
 concommand.Add("blob_menu_dumpcaches", function()

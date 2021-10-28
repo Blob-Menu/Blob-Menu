@@ -78,8 +78,8 @@ function PANEL:Generate_internet()
     self.tabs:Dock(FILL)
 
     local gms = self.tabs:AddTab("gamemodes", "Menu:Pages:Multiplayer:GamemodesList")
-    local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
-    local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
+    self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
+    self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
 
     serverlist.Query({
         Type = "internet",
@@ -120,6 +120,11 @@ function PANEL:Generate_lan()
         menu.multiplayer:ShowBackButton("lan", true)
     end
 
+    function svs.DoClick(s, args)
+        act:UpdateServer(args, menu.serverinfo_lan_default)
+        self.tabs:SetTab("activeserver")
+    end
+
     serverlist.Query({
         Type = "lan",
         Callback = function(...)
@@ -127,7 +132,7 @@ function PANEL:Generate_lan()
             local args = serverlist.Args2Table(...)
             svs:AddButton(args)
 
-            self.loading = false
+            svs.loading = false
         end
     })
 end

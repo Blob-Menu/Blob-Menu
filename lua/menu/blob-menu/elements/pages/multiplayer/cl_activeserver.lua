@@ -27,16 +27,31 @@ function PANEL:FormatPlayers(plys)
     return toret
 end
 
-function PANEL:UpdateServer(args)
+function PANEL:UpdateServer(args, svinfo)
+    if (self.args and self.args.ip) == args.ip then
+        return
+    end
+
+    self.args = args
+
     self:UpdateHTML(false, args, "")
     self.serverdata = args
+    self.serverinfo = svinfo
 
-    menu.GetServerInfo(args.ip, function(d)
-        self.serverinfo = d
-        if self.playerhtml then
-            self:UpdateHTML(self.serverinfo, args, self.playerhtml)
-        end
-    end )
+    if not svinfo then
+        menu.GetServerInfo(args.ip, function(d)
+            self.serverinfo = d
+            if self.playerhtml then
+                self:UpdateHTML(self.serverinfo, args, self.playerhtml)
+            end
+        end )
+    end
+
+    if args.players <= 1 then
+        self.playerhtml = "<div class=\"none\">No Players</div>"
+        self:UpdateHTML(self.serverinfo, args, self.playerhtml)
+        return
+    end
 
     serverlist.PlayerList(args.ip, function(plys)
         self.playerhtml = self:FormatPlayers(plys)
@@ -48,6 +63,10 @@ function PANEL:UpdateServer(args)
 end
 
 function PANEL:UpdateHTML(server, args, plyhtml)
+    if not server then
+        print("[BlobMenu] [Error] Attemping to set ActiveServer HTML with nil server ", "", server, args, plyhtml)
+        return
+    end
     self.html:SetHTML(menu.templates.Render([[
         <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins");
@@ -95,6 +114,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
    
         .left {
             min-width:20%;
+            max-width:20%;
             color:var(--text);
             margin:5px;
             padding:15px;
@@ -122,6 +142,9 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             margin:0px;
             margin-top:10px;
             margin-bottom:10px;
+
+            display:flex;
+            flex-direction:column;
         }
 
         .left > .players::-webkit-scrollbar {
@@ -142,6 +165,14 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             overflow: hidden;
             text-overflow: ellipsis;
             margin:5px;
+        }
+
+        .left > .players > .none {
+            text-align:center;
+            font-size:30px;
+            color:#AAA;
+            margin-top:auto;
+            margin-bottom:auto;
         }
 
         .left > .join {

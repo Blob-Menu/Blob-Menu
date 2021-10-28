@@ -12,5 +12,3 @@ menu.gamemode_tags = {
 }
 
 menu.serverinfo_distributor = "https://raw.githubusercontent.com/Blob-Menu/serverinfo/main/"
-
-menu.debug_mode = true
