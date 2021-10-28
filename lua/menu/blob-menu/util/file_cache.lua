@@ -56,6 +56,13 @@ function cache:UpdateLocal()
     self.raw_text = file.Read(self.filename, "DATA")
     self.decoded = util.Base64Decode(self.raw_text)
     self.stored = util.JSONToTable(self.decoded)
+
+    if not self.stored then
+        self.stored = {}
+
+        print("[BlobMenu] [Error] Cache (" .. self.id .. ") Storage Possibly Corrupted! See below")
+        print(self.decoded)
+    end
 end
 
 function cache:UpdateFile()
