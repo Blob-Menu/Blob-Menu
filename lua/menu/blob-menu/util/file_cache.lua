@@ -40,13 +40,12 @@ end
 -- Data Caches
 -- Encoded JSON
 local cache = {}
-cache.__index = cache
 
 function cache:Init()
     self.filename = "blobmenu/cache/" .. self.id .. ".dat"
 
-    self.raw_text = "{}"
-    self.decoded = "e30="
+    self.raw_text = "e30="
+    self.decoded = "{}"
     self.stored = {}
 
     self:UpdateLocal()
@@ -78,7 +77,12 @@ function menu.Cache(id)
         return menu.caches[id]
     end
 
-    local ch = setmetatable({}, cache)
+    local ch = setmetatable({}, {
+        __index = cache,
+        __tostring = function(s)
+            return "<cache: " .. s.id .. " " .. s.decoded .. ">"
+        end
+    })
     ch.id = id
     ch:Init()
 
@@ -89,7 +93,6 @@ end
 -- File Caches
 -- Handled Folders
 local fcache = {}
-fcache.__index = fcache
 
 function fcache:Init()
     self.location = "blobmenu/cache/" .. self.folder
@@ -123,7 +126,9 @@ function menu.FileCache(fol)
         return menu.file_caches[fol]
     end
 
-    local f = setmetatable({}, fcache)
+    local f = setmetatable({}, {
+        __index = fcache
+    })
     f.folder = fol
     f:Init()
 
