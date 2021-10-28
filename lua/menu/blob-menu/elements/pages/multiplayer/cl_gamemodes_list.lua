@@ -25,7 +25,7 @@ function PANEL:PaintButton(w,h,args)
     surface.SetDrawColor(color_white)
     surface.DrawTexturedRect(h / 2 - (32 / 2), h / 2 - (32 / 2), 32, 32)
 
-    local textw, texth = draw.Text({
+    local textw = draw.Text({
         text = args[1].name,
         pos = {curx, h / 2},
         yalign = 1,

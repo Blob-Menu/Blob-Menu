@@ -22,6 +22,24 @@ function PANEL:Init()
     self:GenerateTab("internet")
 end
 
+function PANEL:Refresh()
+    local act = self:GetActiveTab()
+    local id = act.id
+    if not id then
+        print("No ID")
+        print(act, self)
+        return
+    end
+    act:Remove()
+    self.created[id] = false
+
+    self:GenerateTab(id)
+    self:SetTab(id, true)
+
+    print("refreshingg")
+    menu.multiplayer:ShowBackButton(id, false)
+end
+
 function PANEL:GenerateTab(type)
     if self.created[type] then
         self:SetTab(type)
@@ -72,7 +90,9 @@ function PANEL:Generate_internet()
     })
 
     function self.tabs.OnChanged(s, t)
-        menu.multiplayer:ShowBackButton("internet", self:TestBack(t))
+        local ss = self:TestBack(t)
+        menu.multiplayer:ShowBackButton("internet", ss)
+        print("Setting ", s, t, ss)
     end
 
     function self:TestBack(t)
@@ -81,11 +101,11 @@ function PANEL:Generate_internet()
 
     function self:DoBack(t)
         local tab = (t or self.tabs:GetActiveTab().id)
-        local back = self:TestBack(t)
+        local back = self:TestBack(tab)
 
         if tab == "gamemodes" then return back end
-        if tab == "servers" then self.tabs:SetTab("gamemodes", true) return back end
-        if tab == "activeserver" then self.tabs:SetTab("servers", true) return back end
+        if tab == "servers" then self.tabs:SetTab("gamemodes") return back end
+        if tab == "activeserver" then self.tabs:SetTab("servers") return back end
     end
 end
 

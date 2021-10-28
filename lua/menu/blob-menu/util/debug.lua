@@ -33,7 +33,7 @@ function _pars(pan, func)
 end
 
 -- Dump
-function _d(msg)
-    print(os.time(), msg)
+function _d(...)
+    print(os.time(), ...)
     debug.Trace()
 end

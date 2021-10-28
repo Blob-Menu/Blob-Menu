@@ -11,7 +11,7 @@ function PANEL:Init()
 end
 
 function PANEL:PerformLayout(w,h)
-    self.html:SetSize(w, h)
+    self.html:SetSize(w, h - 8)
     self.html:SetPos(0, 0)
 end
 
@@ -31,7 +31,7 @@ function PANEL:UpdateServer(args)
     self:UpdateHTML(false, args, "")
     self.serverdata = args
 
-    menu.GetServerInfo("1.1.1.1:69696"--[[ args.ip ]], function(d)
+    menu.GetServerInfo(args.ip, function(d)
         self.serverinfo = d
         if self.playerhtml then
             self:UpdateHTML(self.serverinfo, args, self.playerhtml)
@@ -85,12 +85,13 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             width:100%;
             height:1px;
             background-color:var(--text2);
+            margin-top:5px;
+            margin-bottom:10px;
         }
 
         .mid > .description {
             font-size:20px;
         }
-
    
         .left {
             min-width:20%;
@@ -109,7 +110,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             height:20%;
             background: url({{server.image}});
             background-size:cover;
-            background-position: center top;
+            background-position: center center;
             border-radius:15px;
             flex-shrink: 0;
         }
@@ -189,7 +190,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
         basecss = menu.html.BaseCSS(),
         server = server or {},
         args = args,
-        background_col = menu.html.Color(ColorAlpha(menu.LerpColor(0.6, menu.colors.accent1, color_black), 100)),
+        background_col = menu.html.Color(menu.colors.server_background),
         players = plyhtml
     }))
 end

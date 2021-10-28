@@ -9,6 +9,7 @@ end
 function PANEL:AddTab(id, type)
     self.tabs[id] = vgui.Create(type or "Panel", self)
     self.tabs[id]:SetAlpha(0)
+    self.tabs[id]:SetSize(self:GetSize())
     self.tabs[id]:SetVisible(false)
     self.tabs[id].tabs = self
     self.tabs[id].id = id
@@ -20,8 +21,20 @@ function PANEL:AddTab(id, type)
     return self.tabs[id]
 end
 
-function PANEL:SetTab(id)
+function PANEL:SetTab(id, skipbs)
     local act = self:GetActiveTab()
+    if skipbs then
+        if act then
+            act:SetAlpha(0)
+            act:SetVisible(false)
+        end
+        self.tabs[id]:SetAlpha(255)
+        self.tabs[id]:SetVisible(true)
+        self.tabs[id].id = id
+        self:SetActiveTab(self.tabs[id])
+        return
+    end
+
     if (act or {}).id == id then return end
     if act and act:IsVisible() then
         act:AlphaTo(0, 0.2, 0, function()
@@ -37,7 +50,7 @@ function PANEL:SetTab(id)
     new:SetVisible(true)
     new:AlphaTo(255, 0.2)
     new.id = id
-    
+
     self:OnChanged(id)
     self:SetActiveTab(new)
 
@@ -46,7 +59,11 @@ end
 
 function PANEL:PerformLayout(w, h)
     for k,v in pairs(self.tabs) do
-        v:SetSize(w, h)
+        if IsValid(v) then
+            v:SetSize(w, h)
+        else
+            self.tabs[k] = nil
+        end
     end
 end
 

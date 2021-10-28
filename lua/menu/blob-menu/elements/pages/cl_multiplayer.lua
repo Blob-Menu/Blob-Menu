@@ -10,6 +10,12 @@ function PANEL:ShowBackButton(id, t)
     self.top:RunJavascript([[
         document.documentElement.style.setProperty("--back-display", "]] .. (t and "all" or "none") .. [[");
     ]])
+
+    menu.GetServerInfo("backup", function()
+        print("[BlobMenu] Backup data successfully retrieved!")
+    end, function()
+        print("[BlobMenu] Failed to retrieve backup data, falling back to ultra backup!")
+    end )
 end
 
 function PANEL:Init()
@@ -29,9 +35,12 @@ function PANEL:Init()
     self.top:AddFunction("blob", "RunBackbuttonFunction", function()
         local tab = self.gms:GetActiveTab()
 
-        if not tab.DoBack then return end
+        if not tab.DoBack then print("Missing DoBack on ", tab, tab.id) return end
         self:ShowBackButton(tab.id, tab:DoBack())
     end)
+    self.top:AddFunction("blob", "Refresh", function()
+        self.gms:Refresh()
+    end )
     self.top:SetHTML([[
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Poppins");
@@ -51,8 +60,8 @@ function PANEL:Init()
                 flex-direction:row-reverse;
             }
             #search {
-                width:200px;
-                height:40px;
+                width:220px;
+                height:50px;
                 margin-top:auto;
                 margin-bottom:auto;
                 background:transparent;
@@ -128,8 +137,7 @@ function PANEL:Init()
                 border-bottom-width:50px;
             }
 
-            .back-button {
-                display:var(--back-display);
+            .button {
                 height:50px;
                 border-radius:10px 10px 5px 5px;
                 margin-top:auto;
@@ -139,23 +147,31 @@ function PANEL:Init()
                 padding-right:20px;
                 vertical-align:center;
                 line-height:50px;
-                margin-right:10px;
                 border-width:2px;
                 border-color:#2e2e2e;
                 border-style:solid;
                 user-select:none;
                 transition:background 0.2s;
                 cursor: pointer;
+                margin-left:10px;
             }
 
-            .back-button:hover {
+            .back-button {
+                display:var(--back-display);
+                margin-right:10px;
+                margin-left:0px;
+            }
+
+            .button:hover {
                 background:var(--accent);
             }
 
         </style>
 
 
-        <input type="text" id="search" placeholder="Search Servers...">    
+        <div class="button" onclick="blob.Refresh()">Refresh</div>
+      
+        <input type="text" id="search" placeholder="Search Servers...">
 
         <div class="types" id="types">
             <div class="active" id="internet" onclick="ct('internet')">Internet</div>
@@ -165,7 +181,7 @@ function PANEL:Init()
             <div id="blacklisted" onclick="ct('blacklisted')">Blacklisted</div>
         </div>
         
-        <div class="back-button" onclick="blob.RunBackbuttonFunction()"> &lt; Back</div>
+        <div class="button back-button" onclick="blob.RunBackbuttonFunction()"> &lt; Back</div>
 
         <script>
             function ct(type) {
