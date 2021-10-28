@@ -4,13 +4,13 @@ file.CreateDir("blobmenu/cache")
 menu.caches = {}
 menu.file_caches = {}
 
-concommand.Add("removethis_blob_menu_clearcaches", function()
+concommand.Add("blob_menu_clearcaches", function()
     for k,v in pairs(menu.caches) do
         file.Delete(v.filename)
     end
 end )
 
-concommand.Add("removethis_blob_menu_dumpcaches", function()
+concommand.Add("blob_menu_dumpcaches", function()
     for k,v in pairs(menu.caches) do
         print(k, ":")
         PrintTable(v.stored, 2)
