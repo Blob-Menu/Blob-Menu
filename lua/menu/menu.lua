@@ -6,6 +6,7 @@ include("demo_to_video.lua")
 include("errors.lua")
 include("motionsensor.lua")
 include("util.lua")
+include("getmaps.lua")
 
 menu = menu or {}
 menu.enabled = cookie.GetNumber("blob_menu_enabled", 1) == 1
@@ -59,15 +60,18 @@ end, function()
     }
 end )
 
+function menu.IsOnChrome()
+    return jit.arch == "x64"
+end
+
 function menu.Load()
-    if menu.enabled then
+    if menu.enabled and menu.IsOnChrome() then
         pnlMainMenu = {}
         function pnlMainMenu:Call(u)
             if string.StartWith(u, "UpdateMaps(") then
                 menu.maplist = util.JSONToTable(u:sub(#"UpdateMaps(" + 1, -2))
             end
         end
-        include("getmaps.lua")
 
         local function loadDirectory(dir)
             local fil, fol = file.Find(dir .. "/*", "LuaMenu")
@@ -95,8 +99,11 @@ function menu.Load()
         include("menu_demo.lua")
         include("menu_addon.lua")
         include("menu_dupe.lua")
-        include("getmaps.lua")
         include("problems/problems.lua")
+
+        if not menu.IsOnChrome() then
+            print("[BlobMenu] [Error] In order to use BlobMenu you must be on the chromium branch of GMod! sorry :(")
+        end
     end
 end
 
