@@ -27,8 +27,8 @@ function menu.GetServerInfo(ip, done)
     end )
 end
 
-concommand.Add("test_thing", function()
-    menu.GetServerInfo("1.1.1.1:69696", function(...)
-        _p(...)
-    end )
+menu.GetServerInfo("backup", function()
+    print("[BlobMenu] Backup data successfully retrieved!")
+end, function()
+    print("[BlobMenu] Failed to retrieve backup data, falling back to ultra backup!")
 end )

@@ -10,12 +10,6 @@ function PANEL:ShowBackButton(id, t)
     self.top:RunJavascript([[
         document.documentElement.style.setProperty("--back-display", "]] .. (t and "all" or "none") .. [[");
     ]])
-
-    menu.GetServerInfo("backup", function()
-        print("[BlobMenu] Backup data successfully retrieved!")
-    end, function()
-        print("[BlobMenu] Failed to retrieve backup data, falling back to ultra backup!")
-    end )
 end
 
 function PANEL:Init()
