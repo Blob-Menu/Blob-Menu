@@ -12,7 +12,7 @@ Feel free to contribute anything you think should be added! just make a pr and i
 Just follow the code style and dont add *too much* useless garbage
 
 # Roadmap
-* [ ] Working Search
+* [x] Working Search
 * [ ] Displaying Blacklisted Servers
 * [ ] Options Tab
 * [ ] Singleplayer Tab
