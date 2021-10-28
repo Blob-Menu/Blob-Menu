@@ -8,6 +8,8 @@ function PANEL:Init()
     self.html:AddFunction("blob", "Join", function()
         JoinServer(self.serverdata.ip)
     end )
+
+    self.loading = true
 end
 
 function PANEL:PerformLayout(w,h)
@@ -17,6 +19,10 @@ end
 
 function PANEL:FormatPlayers(plys)
     local toret = ""
+
+    if #plys == 0 then
+        return "<div class=\"none\">No Players</div>"
+    end
 
     for k,v in pairs(plys) do
         toret = toret .. [[<div class="player">]] .. v.name .. [[</div>]]
@@ -34,9 +40,17 @@ function PANEL:UpdateServer(args, svinfo)
 
     self.args = args
 
-    self:UpdateHTML(false, args, "")
     self.serverdata = args
     self.serverinfo = svinfo
+    self.playerhtml = "<div class=\"none\">Loading...</div>"
+    self.loading = true
+
+    self:UpdateHTML({
+        description = "Loading...",
+        image = "",
+        tags = {},
+        features = {}
+    }, args, "<div class=\"none\">Loading...</div>")
 
     if not svinfo then
         menu.GetServerInfo(args.ip, function(d)
@@ -67,6 +81,8 @@ function PANEL:UpdateHTML(server, args, plyhtml)
         print("[BlobMenu] [Error] Attemping to set ActiveServer HTML with nil server ", "", server, args, plyhtml)
         return
     end
+
+    self.loading = false
     self.html:SetHTML(menu.templates.Render([[
         <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins");
@@ -142,9 +158,6 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             margin:0px;
             margin-top:10px;
             margin-bottom:10px;
-
-            display:flex;
-            flex-direction:column;
         }
 
         .left > .players::-webkit-scrollbar {
@@ -165,6 +178,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             overflow: hidden;
             text-overflow: ellipsis;
             margin:5px;
+            color:#FFF;
         }
 
         .left > .players > .none {
@@ -224,6 +238,16 @@ function PANEL:UpdateHTML(server, args, plyhtml)
         background_col = menu.html.Color(menu.colors.server_background),
         players = plyhtml
     }))
+end
+
+function PANEL:PaintOver(w,h)
+    if self.loading then
+        local size = 20
+        surface.SetDrawColor(menu.colors.accent1)
+        surface.DrawRect(w / 2 - (size / 2), h / 2 - (size / 2) + (math.sin((CurTime() + 20) * 7) * 50), size, size)
+        surface.DrawRect(w / 2 - (size * 2) - size, h / 2 - (size / 2) + (math.sin((CurTime() + 10) * 7) * 50), size, size)
+        surface.DrawRect(w / 2 + (size * 2), h / 2 - (size / 2) + (math.sin((CurTime() + 30) * 7) * 50), size, size)
+    end
 end
 
 vgui.Register("Menu:Pages:Multiplayer:ActiveServer", PANEL, "Panel")

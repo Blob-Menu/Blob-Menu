@@ -92,7 +92,6 @@ function PANEL:Generate_internet()
     function self.tabs.OnChanged(s, t)
         local ss = self:TestBack(t)
         menu.multiplayer:ShowBackButton("internet", ss)
-        print("Setting ", s, t, ss)
     end
 
     function self:TestBack(t)
@@ -128,29 +127,142 @@ function PANEL:Generate_lan()
     serverlist.Query({
         Type = "lan",
         Callback = function(...)
-            print(...)
             local args = serverlist.Args2Table(...)
             svs:AddButton(args)
 
             svs.loading = false
         end
     })
+
+    function self:DoBack(t)
+        self.tabs:SetTab("servers")
+        return false
+    end
 end
 
--- function PANEL:Generate_history(tab)
---     self.tabs = vgui.Create("Menu:Tabs", self)
---     self.tabs:Dock(FILL)
+function PANEL:Generate_history(tab)
+    self.tabs = vgui.Create("Menu:Tabs", self)
+    self.tabs:Dock(FILL)
 
---     self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
---     self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
+    local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
+    local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
 
---     serverlist.Query({
---         Type = "history",
---         Callback = function(...)
---             local args = serverlist.Args2Table(...)
---             print(args)
---         end
---     })
--- end
+    function self.tabs:OnChanged()
+        menu.multiplayer:ShowBackButton("history", true)
+    end
+
+    function svs.DoClick(s, args)
+        act:UpdateServer(args)
+        self.tabs:SetTab("activeserver")
+    end
+
+    serverlist.Query({
+        Type = "history",
+        Callback = function(...)
+            local args = serverlist.Args2Table(...)
+            svs:AddButton(args)
+
+            svs.loading = false
+        end
+    })
+
+    function self:DoBack(t)
+        self.tabs:SetTab("servers")
+        return false
+    end
+end
+
+function PANEL:Generate_favorite(tab)
+    self.tabs = vgui.Create("Menu:Tabs", self)
+    self.tabs:Dock(FILL)
+
+    local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
+    local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
+
+    function self.tabs:OnChanged()
+        menu.multiplayer:ShowBackButton("favorite", true)
+    end
+
+    function svs.DoClick(s, args)
+        act:UpdateServer(args)
+        self.tabs:SetTab("activeserver")
+    end
+
+    serverlist.Query({
+        Type = "favorite",
+        Callback = function(...)
+            local args = serverlist.Args2Table(...)
+            svs:AddButton(args)
+
+            svs.loading = false
+        end
+    })
+
+    function self:DoBack(t)
+        self.tabs:SetTab("servers")
+        return false
+    end
+end
+
+function PANEL:Generate_blacklisted(tab)
+    function self:Paint(w,h)
+        local _,_h = draw.Text({
+            text = "Currently Not Working",
+            pos = {w / 2, h / 2},
+            font = "Menu:CurrentlyUnimpl",
+            xalign = 1,
+            yalign = 1
+        })
+        draw.Text({
+            text = "(thankkksss rubat)",
+            pos = {w / 2, h / 2 + (_h / 2)},
+            font = "Menu:ServerName",
+            xalign = 1,
+            yalign = 1,
+            color = menu.colors.text2
+        })
+    end
+
+    -- self.tabs = vgui.Create("Menu:Tabs", self)
+    -- self.tabs:Dock(FILL)
+
+    -- local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
+    -- local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
+
+    -- function self.tabs:OnChanged()
+    --     menu.multiplayer:ShowBackButton("blacklisted", true)
+    -- end
+
+    -- function svs.DoClick(s, args)
+    --     act:UpdateServer(args)
+    --     self.tabs:SetTab("activeserver")
+    -- end
+
+    -- GetAPIManifest(function(r)
+    --     local tbl = util.JSONToTable(r).Servers.Banned
+    --     local curi = 1
+
+    --     local function req()
+    --         if not tbl[curi] then return end
+    --         serverlist.PingServer(tbl[curi], function(...)
+    --             local args = serverlist.Args2Table(...)
+    --             -- svs:AddButton(args)
+    --             _p(tbl[curi], args)
+
+    --             svs.loading = false
+
+    --             curi = curi + 1
+    --             -- req()
+    --         end )
+    --     end
+
+    --     req()
+    -- end )
+
+    -- function self:DoBack(t)
+    --     self.tabs:SetTab("servers")
+    --     return false
+    -- end
+end
 
 vgui.Register("Menu:Pages:Multiplayer:Gamemodes", PANEL, "Menu:Tabs")

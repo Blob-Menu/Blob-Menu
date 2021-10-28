@@ -1,4 +1,12 @@
 
+include("mount/mount.lua")
+include("loading.lua")
+include("video.lua")
+include("demo_to_video.lua")
+include("errors.lua")
+include("motionsensor.lua")
+include("util.lua")
+
 menu = menu or {}
 menu.enabled = cookie.GetNumber("blob_menu_enabled", 1) == 1
 menu.debug_mode = cookie.GetNumber("blob_debug_enabled", 0) == 1
@@ -52,14 +60,6 @@ end, function()
 end )
 
 function menu.Load()
-    include("mount/mount.lua")
-    include("loading.lua")
-    include("video.lua")
-    include("demo_to_video.lua")
-    include("errors.lua")
-    include("motionsensor.lua")
-    include("util.lua")
-
     if menu.enabled then
         pnlMainMenu = {}
         function pnlMainMenu:Call(u)

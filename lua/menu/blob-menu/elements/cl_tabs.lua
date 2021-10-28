@@ -35,6 +35,8 @@ function PANEL:SetTab(id, skipbs)
         return
     end
 
+    self:OnChanged(id)
+
     if (act or {}).id == id then return end
     if act and act:IsVisible() then
         act:AlphaTo(0, 0.2, 0, function()
@@ -51,7 +53,6 @@ function PANEL:SetTab(id, skipbs)
     new:AlphaTo(255, 0.2)
     new.id = id
 
-    self:OnChanged(id)
     self:SetActiveTab(new)
 
     return new
