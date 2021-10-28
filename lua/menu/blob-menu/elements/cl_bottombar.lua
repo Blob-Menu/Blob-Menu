@@ -41,7 +41,7 @@ function PANEL:AddButton(title, click)
             yalign = 1
         })
 
-        if self.textW ~= tw then
+        if self.textW != tw then
             print("Updating ", self)
             self.textW = tw
 

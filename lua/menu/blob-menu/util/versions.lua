@@ -3,7 +3,7 @@ menu.version = 0.2
 menu.information = {}
 
 http.Fetch("https://raw.githubusercontent.com/Blob-Menu/Blob-Menu/main/info.json", function(b, s, h, c)
-    if c ~= 200 then
+    if c != 200 then
         print("[BlobMenu] [Error] Failed to retrieve info.json", "", b, c)
         return
     end

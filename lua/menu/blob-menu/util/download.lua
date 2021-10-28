@@ -10,7 +10,7 @@ function menu.Download(url, dir, done, err)
     end
 
     http.Fetch(url, function(bod, size, hed, code)
-        if code ~= 200 or size <= 10 then return err(code) end
+        if code != 200 or size <= 10 then return err(code) end
         cache:Write(url, bod)
         done()
     end, err)
@@ -20,7 +20,7 @@ end
 local imgcache = {}
 local imgcache_file
 function menu.Image(url, done)
-    if imgcache[url] ~= nil then
+    if imgcache[url] != nil then
         return imgcache[url]
     end
 

@@ -50,7 +50,7 @@ end
 local current = IsInGame()
 hook.Add("Think", "Menu:WatchForIngameChanges", function()
     local ig = IsInGame()
-    if current ~= ig then
+    if current != ig then
         current = ig
         menu.send_signal(menu.panel, "InGameChanged", current)
     end

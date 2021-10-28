@@ -24,7 +24,7 @@ function menu.GetServerInfo(ip, done)
     local url = menu.serverinfo_distributor .. ip
 
     http.Fetch(url, function(b, s, h, c)
-        if c ~= 200 then return done(info_cache:Get("backup", menu.serverinfo_mega_default)) end
+        if c != 200 then return done(info_cache:Get("backup", menu.serverinfo_mega_default)) end
         local dat = util.JSONToTable(b)
         done(dat)
 
