@@ -1,5 +1,5 @@
 
-function serverlist.Args2Table(ping,name,desc,map,ply,max,bots,pass,last,ip,gm,wsid)
+function serverlist.Args2Table(ping,name,desc,map,ply,max,bots,pass,last,ip,gm,wsid,isanon,ver,loc,gmcat)
     return {
         ping = ping,
         name = name,
@@ -12,6 +12,10 @@ function serverlist.Args2Table(ping,name,desc,map,ply,max,bots,pass,last,ip,gm,w
         lastplayed = last,
         ip = ip,
         gm = gm,
-        wsid = wsid
+        wsid = wsid,
+        isanon = isanon,
+        ver = ver,
+        loc = loc,
+        gmcat = gmcat,
     }
 end

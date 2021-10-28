@@ -12,9 +12,21 @@ function PANEL:ShowBackButton(id, t)
     ]])
 end
 
+function PANEL:ShowSearch(id, t)
+    if t == nil then
+        t = self.searchshow[id]
+    end
+
+    self.searchshow[id] = t
+    self.top:RunJavascript([[
+        document.documentElement.style.setProperty("--search-display", "]] .. (t and "all" or "none") .. [[");
+    ]])
+end
+
 function PANEL:Init()
     menu.multiplayer = self
     self.backshow = {}
+    self.searchshow = {}
     self.gms = vgui.Create("Menu:Pages:Multiplayer:Gamemodes", self)
 
     -- top stuff:
@@ -32,6 +44,13 @@ function PANEL:Init()
     self.top:AddFunction("blob", "Refresh", function()
         self.gms:Refresh()
     end )
+    self.top:AddFunction("blob", "OnSearch", function(s)
+        local tab = self.gms:GetActiveTab()
+
+        if tab.DoSearch then
+            tab:DoSearch(s)
+        end
+    end )
     self.top:SetHTML([[
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Poppins");
@@ -40,6 +59,7 @@ function PANEL:Init()
                 --accent-transparent:rgba(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[, 0.6);
                 --background:rgb(]] .. menu.colors.background.r .. "," .. menu.colors.background.g .. "," .. menu.colors.background.b .. [[);
                 --back-display:none;
+                --search-display:none;
             }
 
             body {
@@ -51,6 +71,7 @@ function PANEL:Init()
                 flex-direction:row-reverse;
             }
             #search {
+                display:var(--search-display);
                 width:220px;
                 height:50px;
                 margin-top:auto;
@@ -61,7 +82,6 @@ function PANEL:Init()
                 border-color:#2e2e2e;
                 border-width:2px;
 
-                margin-left:auto;
                 font-family:"Poppins";
                 transition: border-color 0.2s;
 
@@ -70,7 +90,7 @@ function PANEL:Init()
 
                 margin-right:5px;
                 
-                padding:5px;
+                padding:5px 10px 5px 10px;
             }
             #search:focus {
                 border-color:var(--accent);
@@ -91,6 +111,7 @@ function PANEL:Init()
                 margin-top:auto;
                 margin-bottom:auto;
                 background:var(--background);
+                margin-right:auto;
             }
 
             .types > div:first-child {
@@ -149,8 +170,8 @@ function PANEL:Init()
 
             .back-button {
                 display:var(--back-display);
-                margin-right:10px;
-                margin-left:0px;
+                margin-right:0px;
+                margin-left:10px;
             }
 
             .button:hover {
@@ -159,10 +180,9 @@ function PANEL:Init()
 
         </style>
 
-
         <div class="button" onclick="blob.Refresh()">Refresh</div>
-      
-        <input type="text" id="search" placeholder="Search Servers...">
+        <div class="button back-button" onclick="blob.RunBackbuttonFunction()"> &lt; Back</div>
+        <input type="text" id="search" placeholder="Search Servers..." oninput="blob.OnSearch(document.getElementById('search').value)">
 
         <div class="types" id="types">
             <div class="active" id="internet" onclick="ct('internet')">Internet</div>
@@ -172,8 +192,6 @@ function PANEL:Init()
             <div id="blacklisted" onclick="ct('blacklisted')">Blacklisted</div>
         </div>
         
-        <div class="button back-button" onclick="blob.RunBackbuttonFunction()"> &lt; Back</div>
-
         <script>
             function ct(type) {
                 blob.ChangeType(type);

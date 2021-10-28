@@ -100,9 +100,25 @@ function PANEL.QueryCallback(rs, s, ...)
     rs.gamemodes[args.desc].ply_count = rs.gamemodes[args.desc].ply_count + args.players
 
     table.insert(rs.gamemodes[args.desc].members, args)
-    if rs.active_thing and (rs.active_thing.args.name == args.desc) then
+    if rs.active_thing and (rs.active_thing.args.name == args.desc) and (not rs.searching) then
         rs.active_thing:AddButton(args, rs.tabs)
         rs.active_thing:Sort()
+
+        if rs.toadd then
+            for k,v in pairs(rs.toadd) do
+                rs.active_thing:AddButton(v, rs.tabs)
+                rs.toadd[k] = nil
+            end
+            rs.active_thing:Sort()
+        end
+    elseif rs.searching then
+        if menu.search.Match(args.name, rs.searching) >= 0.3 then
+            rs.active_thing:AddButton(args, rs.tabs)
+            rs.active_thing:Sort()
+        end
+
+        rs.toadd = rs.toadd or {}
+        table.insert(rs.toadd, args)
     end
 
     rs.last_updated = SysTime()

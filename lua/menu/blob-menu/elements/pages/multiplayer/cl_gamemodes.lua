@@ -36,7 +36,6 @@ function PANEL:Refresh()
     self:GenerateTab(id)
     self:SetTab(id, true)
 
-    print("refreshingg")
     menu.multiplayer:ShowBackButton(id, false)
 end
 
@@ -78,7 +77,7 @@ function PANEL:Generate_internet()
     self.tabs:Dock(FILL)
 
     local gms = self.tabs:AddTab("gamemodes", "Menu:Pages:Multiplayer:GamemodesList")
-    self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
+    local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
     self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
 
     serverlist.Query({
@@ -92,6 +91,7 @@ function PANEL:Generate_internet()
     function self.tabs.OnChanged(s, t)
         local ss = self:TestBack(t)
         menu.multiplayer:ShowBackButton("internet", ss)
+        menu.multiplayer:ShowSearch("internet", t == "servers")
     end
 
     function self:TestBack(t)
@@ -102,9 +102,36 @@ function PANEL:Generate_internet()
         local tab = (t or self.tabs:GetActiveTab().id)
         local back = self:TestBack(tab)
 
-        if tab == "gamemodes" then return back end
-        if tab == "servers" then self.tabs:SetTab("gamemodes") return back end
-        if tab == "activeserver" then self.tabs:SetTab("servers") return back end
+        menu.multiplayer:ShowBackButton("internet", back)
+
+        if tab == "servers" then self.tabs:SetTab("gamemodes") end
+        if tab == "activeserver" then self.tabs:SetTab("servers") end
+    end
+
+    function self:DoSearch(txt)
+        if txt == "" then
+            for k,v in pairs(svs.buttons) do
+                v:SetVisible(true)
+            end
+            gms.searching = false
+            return
+        end
+
+        gms.searching = txt
+        local names = {}
+        for k,v in pairs(svs.buttons) do
+            table.insert(names, {v.values[1].name, v})
+            v:SetVisible(false)
+        end
+
+        local sear = menu.search.Search(names, txt, function(s)
+            return s[1]
+        end )
+        for k,v in pairs(sear) do
+            if v.match >= 0.3 then
+                v.target[2]:SetVisible(true)
+            end
+        end
     end
 end
 
@@ -117,6 +144,7 @@ function PANEL:Generate_lan()
 
     function self.tabs:OnChanged()
         menu.multiplayer:ShowBackButton("lan", true)
+        menu.multiplayer:ShowSearch("lan", false)
     end
 
     function svs.DoClick(s, args)
@@ -149,6 +177,7 @@ function PANEL:Generate_history(tab)
 
     function self.tabs:OnChanged()
         menu.multiplayer:ShowBackButton("history", true)
+        menu.multiplayer:ShowSearch("history", false)
     end
 
     function svs.DoClick(s, args)
@@ -181,6 +210,7 @@ function PANEL:Generate_favorite(tab)
 
     function self.tabs:OnChanged()
         menu.multiplayer:ShowBackButton("favorite", true)
+        menu.multiplayer:ShowSearch("favorite", false)
     end
 
     function svs.DoClick(s, args)
