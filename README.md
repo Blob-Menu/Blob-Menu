@@ -20,6 +20,7 @@ Just follow the code style and dont add *too much* useless garbage
 * [ ] Refactor most stuff to make it less garbage
 * [ ] Support lower resolutions better
 * [ ] Plugins System  
+* [ ] Rewrite the rest of GMods major menu components, like the error display and gui.OpenURL() popup
 
 # Known Bugs
 - Back button doesnt remove itself properly on other tabs besides Internet
