@@ -13,7 +13,6 @@ Just follow the code style and dont add *too much* useless garbage
 
 # Roadmap
 * [x] Working Search
-* [ ] Displaying Blacklisted Servers
 * [ ] Options Tab
 * [ ] Singleplayer Tab
 * [ ] Rewrite of most HTML portions (such as ActiveServer)

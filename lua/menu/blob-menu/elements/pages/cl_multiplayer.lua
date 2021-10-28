@@ -189,7 +189,6 @@ function PANEL:Init()
             <div id="favorite" onclick="ct('favorite')">Favorites</div>
             <div id="history" onclick="ct('history')">History</div>
             <div id="lan" onclick="ct('lan')">LAN</div>
-            <div id="blacklisted" onclick="ct('blacklisted')">Blacklisted</div>
         </div>
         
         <script>
