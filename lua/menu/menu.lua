@@ -13,7 +13,6 @@ include("errors.lua")
 include("util.lua")
 -- include("mplugins/menu.lua")
 
-
 -- Super jank fix to the problem of maps
 -- Its really annoying ik
 pnlMainMenu = {}
@@ -27,10 +26,8 @@ include("getmaps.lua")
 menu = menu or {}
 local function loadDirectory(dir)
     local fil, fol = file.Find(dir .. "/*", "LuaMenu")
-    print("Attemping dir " .. dir .. " found " .. #fil .. " - " .. #fol)
     for k,v in ipairs(fil) do
         include(dir .. "/" .. v)
-        print("loaded " .. dir .. "/" .. v)
     end
 
     for k,v in pairs(fol) do
