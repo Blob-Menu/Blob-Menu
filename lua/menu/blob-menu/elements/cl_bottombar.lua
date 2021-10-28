@@ -10,22 +10,11 @@ function PANEL:Init()
     menu.bottombar = self
     self.buttons = {}
 
-    self.exit = vgui.Create("DButton", self)
-    self.exit:SetText("")
-
-    function self.exit:DoClick()
-        RunGameUICommand("Quit")
-    end
-
-    function self.exit:Paint(w,h)
-
-    end
-
     self:AddButton("exit", function()
         RunGameUICommand("Quit")
     end)
 
-    self:AddButton("report bug", function()
+    self:AddButton("report a bug", function()
         gui.OpenURL("https://github.com/Blob-Menu/Blob-Menu/issues/new?assignees=&labels=bug&template=bug_report.md&title=")
     end )
 end
