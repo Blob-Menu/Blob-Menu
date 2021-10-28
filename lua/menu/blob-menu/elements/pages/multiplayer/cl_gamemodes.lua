@@ -111,6 +111,7 @@ function PANEL:Generate_internet()
     function self:DoSearch(txt)
         if txt == "" then
             for k,v in pairs(svs.buttons) do
+                if not IsValid(v) then continue end
                 v:SetVisible(true)
             end
             gms.searching = false
@@ -120,6 +121,7 @@ function PANEL:Generate_internet()
         gms.searching = txt
         local names = {}
         for k,v in pairs(svs.buttons) do
+            if not IsValid(v) then continue end
             table.insert(names, {v.values[1].name, v})
             v:SetVisible(false)
         end
