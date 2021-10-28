@@ -12,14 +12,14 @@ Feel free to contribute anything you think should be added! just make a pr and i
 Just follow the code style and dont add *too much* useless garbage
 
 # Roadmap
-* [] Working Search
-* [] Displaying Blacklisted Servers
-* [] Options Tab
-* [] Singleplayer Tab
-* [] Rewrite of most HTML portions (such as ActiveServer)
-* [] Refactor most stuff to make it less garbage
-* [] Support lower resolutions better
-* [] Plugins System  
+* [ ] Working Search
+* [ ] Displaying Blacklisted Servers
+* [ ] Options Tab
+* [ ] Singleplayer Tab
+* [ ] Rewrite of most HTML portions (such as ActiveServer)
+* [ ] Refactor most stuff to make it less garbage
+* [ ] Support lower resolutions better
+* [ ] Plugins System  
 
 # Known Bugs
 - Back button doesnt remove itself properly on other tabs besides Internet
