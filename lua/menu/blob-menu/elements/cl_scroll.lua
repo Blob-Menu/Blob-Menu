@@ -6,18 +6,18 @@ function PANEL:Init()
     self:GetVBar():SetWide(10)
     self:GetVBar():DockMargin(0, 5, 0, 5)
 
-    self.placeholder = vgui.Create("Panel", self)
-    self.placeholder:Dock(TOP)
+    -- self.placeholder = vgui.Create("Panel", self)
+    -- self.placeholder:Dock(TOP)
 
-    function self.placeholder.Paint(s, w, h)
-        if not self.adds then return end
-        self.viewamt = (self.viewamt or 0) + 1
+    -- function self.placeholder.Paint(s, w, h)
+    --     if not self.adds then return end
+    --     self.viewamt = (self.viewamt or 0) + 1
 
-        if self.viewamt <= 20 then return end
+    --     if self.viewamt <= 20 then return end
 
-        self.viewamt = 0
-        self:LoadMore(amt)
-    end
+    --     self.viewamt = 0
+    --     self:LoadMore(amt)
+    -- end
 
     self:GetVBar().Paint = self.BarPaint
     self:GetVBar().btnGrip.Paint = self.GripPaint
