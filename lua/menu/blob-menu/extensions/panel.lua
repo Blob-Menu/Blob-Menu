@@ -15,6 +15,13 @@ function meta:RecursivePos()
         current = current:GetParent()
     end
 
-    print(self, x, y)
     return x, y
+end
+
+menu.PanelPrepareEx = menu.PanelPrepareEx or meta.Prepare
+
+function meta:Prepare()
+    menu.PanelPrepareEx(self)
+
+    self.debug_info = debug.getinfo(3)
 end
