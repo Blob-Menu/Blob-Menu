@@ -38,12 +38,13 @@ hook.Add("DrawOverlay", "Menu:Watch", function()
         t = CurTime() + 3
 
         for k,v in pairs(towatch) do
-            local r = file.Read(k, "LuaMenu")
-            if r ~= v then
-                towatch[k] = r
-                print("[BlobMenu] [Watch] Detected File Change, Refreshing!")
-                RunConsoleCommand("blob_menu_refresh")
-            end
+            file.AsyncRead(k, "LuaMenu", function(f, g, s, dat)
+                if dat ~= v then
+                    towatch[k] = r
+                    print("[BlobMenu] [Watch] Detected File Change, Refreshing!")
+                    RunConsoleCommand("blob_menu_refresh")
+                end
+            end )
         end
     end
 end )
