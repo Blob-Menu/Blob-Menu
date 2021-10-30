@@ -42,7 +42,6 @@ function PANEL:AddButton(title, click)
         })
 
         if self.textW != tw then
-            print("Updating ", self)
             self.textW = tw
 
             self:SetWide(tw + 60)
