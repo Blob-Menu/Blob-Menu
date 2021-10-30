@@ -14,9 +14,6 @@ local PANEL = {}
 function PANEL:Init()
     self.buttons = {}
     self.buttons_by_name = {}
-    -- self:AddButton("singleplayer", print)
-    -- self:AddButton("multiplayer", print)
-    -- self:AddButton("options", print)
 end
 
 function PANEL:PaintOver(w, h)
