@@ -16,7 +16,16 @@ function _p2(t, i)
         ["string"] = function(v) return Color(228, 134, 13), "\"" .. v .. "\"" end,
         ["number"] = function(v) return Color(174, 129, 255), tostring(v) end,
         ["panel"] = function(v) return Color(230, 219, 116), {tostring(v), #v:GetChildren()} end,
-        ["function"] = function(v) return Color(233, 86, 120), tostring(v) .. "\t" .. debug.getinfo(v).short_src end,
+        ["function"] = function(v)
+            local inf = debug.getinfo(v)
+            local _e = ""
+
+            if inf.linedefined then
+                _e = "\t" .. debug.getinfo(v).linedefined .. ":" .. debug.getinfo(v).lastlinedefined
+            end
+
+            return Color(233, 86, 120), tostring(v) .. "\t" .. debug.getinfo(v).short_src .. _e
+        end,
         ["default"] = function(v) return Color(177, 177, 177), tostring(v) end,
     }
 
@@ -26,13 +35,14 @@ function _p2(t, i)
 
         if types[ty] then
             local col, msg = types[ty](v)
-            MsgC(istr, prefix, col, istable(msg) and unpack(msg) or msg, "\n")
+            MsgC(istr, prefix, col, istable(msg) and unpack(msg) or msg)
+            print()
         elseif ty == "table" then
             MsgC(istr, Color(102, 217, 239), tostring(v), ":\n")
             _p2(v, i + 1, d)
         else
             local col, msg = types["default"](v)
-            MsgC(istr, prefix, col, msg)
+            MsgC(istr, prefix, col, msg, "\n")
         end
     end
 end
