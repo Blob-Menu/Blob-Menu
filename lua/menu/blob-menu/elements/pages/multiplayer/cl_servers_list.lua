@@ -19,7 +19,7 @@ end
 function PANEL:Sort(b, args)
     for k,v in pairs(self.buttons) do
         if not IsValid(v) then continue end
-        v:SetZPos(-((v.values[1].players or 0) + 1))
+        v:SetZPos(-(menu.GetServerRanking(v.values[1]) + 1))
     end
 end
 
@@ -44,7 +44,9 @@ end
 
 function PANEL:PaintButton(w,h,args)
     args = args[1]
-    local curx = h / 4
+    local curx = h / 2
+
+    draw.RoundedBoxEx(4, 0, 0, 12, h, menu.colors.accent1, true, false, true)
 
     draw.Text({
         text = args.name,
@@ -56,7 +58,7 @@ function PANEL:PaintButton(w,h,args)
 
     draw.Text({
         text = args.players .. " / " .. (args.maxplayers or 27),
-        pos = {w - h / 2, h / 2},
+        pos = {w - h / 2, h / 2 + 2},
         xalign = 2,
         yalign = 1,
         font = "Menu:ServerInfo",
