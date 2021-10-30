@@ -48,60 +48,53 @@ function PANEL:Init()
     self.center.buttons:Dock(TOP)
     self.center.buttons:SetTall(IsInGame() and 50 or 0)
 
-    function self.center.buttons:AddButton(text, on, show_ingame)
-        local b = vgui.Create("DButton", s)
+    function self.center.buttons:AddButton(name, on)
+        local b = vgui.Create("DButton", self)
+        b:Dock(LEFT)
+        b:SetWide(100)
         b:SetText("")
-        b:SetVisible(IsInGame())
-        b.DoClick = on
-        b.ShowIngame = show_ingame
 
-        function b:Paint(w, h)
-            local hov = self:IsHovered()
-            self.olwid = Lerp(FrameTime() * 10, self.olwid or 0, hov and h or 0)
-            self.textcol = menu.LerpColor(FrameTime() * 10, self.textcol or menu.colors.text, hov and menu.colors.text or menu.colors.accent2)
+        b.text = name
+        b.DoClick = on
+
+        function b:Paint(w,h)
+            self.anim = Lerp(FrameTime() * 10, self.anim or 0, self:IsHovered() and h or 0)
 
             surface.SetDrawColor(menu.colors.accent1)
             surface.DrawOutlinedRect(0, 0, w, h, 2)
-            surface.SetDrawColor(menu.colors.accent2)
-            surface.DrawRect(0, h - self.olwid, w, h)
+            surface.DrawRect(0, h - self.anim, w, h)
 
-            local tw = draw.Text({
-                text = text,
-                pos = {w / 2, h / 2 + 2},
-                font = "Menu:Dashboard:Buttons",
+            draw.Text({
+                text = self.text,
+                pos = {w / 2, h / 2 + 1},
                 xalign = 1,
                 yalign = 1,
-                color = self.textcol
+                font = "Menu:Dashboard:Buttons"
             })
-
-            tw = tw + 20
-            if self.textw != tw then
-                self.textw = tw
-                self:SetWide(self.textw)
-            end
         end
-
-        return b
     end
-
-    self.center.buttons:AddButton("Disconnect", function()
-        RunGameUICommand("disconnect")
-    end, true)
-    self.center.buttons:AddButton("Resume", gui.HideGameUI, true)
 
     function self.center.buttons:InGameChanged(t)
-        self:SetTall(t and 50 or 0)
+        self:SetTall(1)
 
         for k,v in pairs(self:GetChildren()) do
-            v:SetVisible((v.show_ingame and t) or false)
+            v:SetVisible(t)
         end
     end
 
-    function self.center.buttons:PerformLayout(w, h)
+    function self.center.buttons:PerformLayout(w,h)
+        surface.SetFont("Menu:Dashboard:Buttons")
         for k,v in pairs(self:GetChildren()) do
             v:Dock(LEFT)
+            v:DockMargin(0, 0, 10, 0)
+            v:SetWide(select(1, surface.GetTextSize(v.text)) + 20)
         end
     end
+
+    self.center.buttons:AddButton("resume", gui.HideGameUI)
+    self.center.buttons:AddButton("disconnect", function()
+        RunGameUICommand("Disconnect")
+    end )
 end
 
 function PANEL:Think()
