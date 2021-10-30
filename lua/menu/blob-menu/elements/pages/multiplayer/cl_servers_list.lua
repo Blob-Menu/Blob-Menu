@@ -44,13 +44,16 @@ end
 
 function PANEL:PaintButton(w,h,args)
     args = args[1]
-    local curx = h / 2
 
-    draw.RoundedBoxEx(4, 0, 0, 12, h, menu.colors.accent1, true, false, true)
+    if menu.country_flags[args.loc] then
+        menu.country_flags[args.loc](18, h)
+    else
+        draw.RoundedBoxEx(4, 0, 0, 18, h, menu.colors.accent1, true, false, true)
+    end
 
     draw.Text({
         text = args.name,
-        pos = {curx, h / 2},
+        pos = {h / 2 + 6, h / 2},
         yalign = 1,
         font = "Menu:ServerName",
         color = menu.colors.text2
