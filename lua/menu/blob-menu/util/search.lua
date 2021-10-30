@@ -2,7 +2,7 @@
 menu.search = {}
 
 function menu.search.Match(str, need)
-    if string.find(str:lower(), need:lower()) then
+    if string.find(str:lower(), need:lower(), 1, true) then
         return 1
     end
     return 0
