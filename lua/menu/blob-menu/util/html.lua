@@ -22,6 +22,7 @@ function menu.html.BaseCSS()
             --accent:]] .. menu.html.Color(menu.colors.accent1) .. [[;
             --accent-transparent:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)) .. [[;
             --accent-transparent-5:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)) .. [[;
+            --accent-transparent-7:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .7)) .. [[;
             ]] .. css .. [[
         }
         body {
