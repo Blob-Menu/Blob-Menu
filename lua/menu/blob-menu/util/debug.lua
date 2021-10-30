@@ -51,7 +51,7 @@ function _p2(t, i)
             MsgC(istr, prefix, col, istable(msg) and unpack(msg) or msg)
             print()
         elseif ty == "table" then
-            MsgC(istr, Color(102, 217, 239), tostring(v), ":\n")
+            MsgC(istr, Color(102, 217, 239), k, ":\n")
             _p2(v, i + 1, d)
         else
             local col, msg = types["default"](v)
