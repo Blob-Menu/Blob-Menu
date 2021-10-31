@@ -18,6 +18,19 @@ function menu.html.BaseCSS()
     end
 
     return [[
+        *::-webkit-scrollbar {
+            width:7px;
+            border-radius:4px;
+            background:var(--background);
+        }
+
+        *::-webkit-scrollbar-thumb {
+            width:5px;
+            margin:1px;
+            border-radius:4px;
+            background:var(--accent1);
+        }
+
         :root{
             --accent:]] .. menu.html.Color(menu.colors.accent1) .. [[;
             --accent-transparent:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)) .. [[;
