@@ -86,7 +86,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
     self.html:SetHTML(menu.templates.Render([[
         <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins");
-        {{basecss}}
+        {{base_style}}
     
         body {
             display: flex;
@@ -159,20 +159,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             margin-top:10px;
             margin-bottom:10px;
         }
-
-        .left > .players::-webkit-scrollbar {
-            width:7px;
-            border-radius:4px;
-            background:var(--background);
-        }
-
-        .left > .players::-webkit-scrollbar-thumb {
-            width:5px;
-            margin:1px;
-            border-radius:4px;
-            background:var(--accent1);
-        }
-
+        
         .left > .players > .player {
             white-space: nowrap;
             overflow: hidden;
@@ -232,7 +219,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
     
     ]], {
         colors = menu.colors,
-        basecss = menu.html.BaseCSS(),
+        base_style = menu.html.BaseCSS(),
         server = server or {},
         args = args,
         background_col = menu.html.Color(menu.colors.server_background),
