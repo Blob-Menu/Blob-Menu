@@ -53,7 +53,6 @@ function PANEL:Init()
     end )
     self.top:SetHTML([[
         <style>
-            @import url("https://fonts.googleapis.com/css2?family=Poppins");
             :root {
                 --accent:rgb(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[);
                 --accent-transparent:rgba(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[, 0.6);

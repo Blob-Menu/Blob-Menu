@@ -85,7 +85,6 @@ function PANEL:UpdateHTML(server, args, plyhtml)
     self.loading = false
     self.html:SetHTML(menu.templates.Render([[
         <style>
-        @import url("https://fonts.googleapis.com/css2?family=Poppins");
         {{base_style}}
     
         body {

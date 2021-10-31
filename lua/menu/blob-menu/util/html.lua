@@ -18,6 +18,7 @@ function menu.html.BaseCSS()
     end
 
     return [[
+        @import url("https://fonts.googleapis.com/css2?family=Poppins");
         *::-webkit-scrollbar {
             width:7px;
             border-radius:4px;
