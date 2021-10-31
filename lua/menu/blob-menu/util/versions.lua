@@ -1,5 +1,5 @@
 
-menu.version = 0.2
+menu.version = 0.3
 menu.information = {}
 
 http.Fetch("https://raw.githubusercontent.com/Blob-Menu/Blob-Menu/main/info.json", function(b, s, h, c)

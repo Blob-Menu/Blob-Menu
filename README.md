@@ -14,7 +14,7 @@ Just follow the code style and dont add *too much* useless garbage
 # Roadmap
 * [x] Working Search
 * [ ] Options Tab
-* [ ] Singleplayer Tab
+* [x] Singleplayer Tab
 * [ ] Rewrite of most HTML portions (such as ActiveServer)
 * [ ] Refactor most stuff to make it less garbage
 * [ ] Support lower resolutions better
