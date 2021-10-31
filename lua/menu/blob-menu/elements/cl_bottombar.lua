@@ -14,6 +14,10 @@ function PANEL:Init()
         RunGameUICommand("Quit")
     end)
 
+    self:AddButton("game options", function()
+        RunGameUICommand("openoptionsdialog")
+    end )
+
     self:AddButton("report a bug", function()
         gui.OpenURL("https://github.com/Blob-Menu/Blob-Menu/issues/new?assignees=&labels=bug&template=bug_report.md&title=")
     end )
@@ -21,7 +25,6 @@ end
 
 function PANEL:AddButton(title, click)
     title = title:upper()
--- 
 
     local b = vgui.Create("DButton", self)
     b:SetText("")
