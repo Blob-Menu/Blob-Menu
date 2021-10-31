@@ -37,9 +37,9 @@ function PANEL:Init()
     self.topbar = vgui.Create("Menu:Topbar", self)
     self.bottom = vgui.Create("Menu:Bottombar", self)
 
-    -- self:AddPage("singleplayer", "Menu:Page:Singleplayer")
-    self:AddPage("multiplayer", "Menu:Page:Multiplayer")
+    self:AddPage("singleplayer", "Menu:Page:Singleplayer")
     self:AddPage("dashboard", "Menu:Page:Dashboard")
+    self:AddPage("multiplayer", "Menu:Page:Multiplayer")
     self:AddPage("options", "Panel")
 
     self:SetSize(ScrW(), ScrH())
