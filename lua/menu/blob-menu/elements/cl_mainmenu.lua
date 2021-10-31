@@ -10,7 +10,7 @@ function PANEL:Init()
         <style>
         ]] .. menu.html.BaseCSS() .. [[
 
-        svg {
+        .bg, .bg > * {
             position:absolute;
             width:100%;
             height:100%;
@@ -30,7 +30,7 @@ function PANEL:Init()
         </style>
         
         <div class="bottom"></div>
-        ]] .. menu.svgs[menu.config.background_svg] or menu.svgs["blob"] .. [[
+        <div class="bg">]] .. menu.backgrounds[menu.config.background] or menu.backgrounds["blob"] .. [[</div>
     ]])
 
     self.canvas = vgui.Create("Panel", self)

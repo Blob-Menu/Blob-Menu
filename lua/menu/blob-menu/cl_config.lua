@@ -2,7 +2,7 @@
 menu = menu or {}
 menu.config = {
     moving_garrysmod = false, -- Make the garry's mod text move a little bit
-    background_svg = "blob"
+    background = "blob"
 }
 
 menu.gamemode_tags = {
