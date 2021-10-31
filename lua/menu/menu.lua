@@ -76,7 +76,10 @@ function menu.Load()
         local function loadDirectory(dir)
             local fil, fol = file.Find(dir .. "/*", "LuaMenu")
             for k,v in ipairs(fil) do
-                include(dir .. "/" .. v)
+                local spl = v:Split(".")
+                if spl[#spl] == "lua" then
+                    include(dir .. "/" .. v)
+                end
             end
 
             for k,v in pairs(fol) do
