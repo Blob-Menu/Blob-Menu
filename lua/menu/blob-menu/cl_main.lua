@@ -56,6 +56,13 @@ hook.Add("Think", "Menu:WatchForIngameChanges", function()
     end
 end )
 
+menu.OldGameDetails = menu.OldGameDetails or GameDetails
+function GameDetails(...)
+    menu.OldGameDetails(...)
+
+    menu.send_signal(menu.panel, "InGameChanged", true)
+end
+
 concommand.Add("lua_run_menu", function(_,_,_,a)
     RunString(a, "lua_run_menu")
 end )
