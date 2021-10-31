@@ -22,6 +22,8 @@ function PANEL:Init()
     end )
 
     self:GenerateHTML()
+
+    menu.themes.Watch(self, self.GenerateHTML)
 end
 
 function PANEL:GenerateHTML()
@@ -75,4 +77,4 @@ function PANEL:GenerateHTML()
     }))
 end
 
-vgui.Register("Menu:Singleplayer:Options", PANEL, "DHTML")
+vgui.Register("Menu:Singleplayer:Options", PANEL, "Menu:HTML")

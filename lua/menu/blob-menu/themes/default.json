@@ -1,0 +1,25 @@
+
+{
+    "meta": {
+        "name": "Default",
+        "author": "Melon"
+    },
+    "colors": {
+        "accent_dark": "006eeaff",
+        "text2": "d2d2d2ff",
+        "active_map": "ffffffff",
+        "accent2": "0082fe59",
+        "active_underline": "ffffffff",
+        "background": "161616fe",
+        "textentry_outline_selected": "ffffff99",
+        "text": "ffffffff",
+        "timer_color": "ffffffff",
+        "textentry_outline": "ffffff4c",
+        "server_background": "232323fc",
+        "bottom_bg": "00000028",
+        "accent1": "0082feff",
+        "inactive_map": "161616ff",
+        "gmod_color": "ffffffff",
+        "shadow": "121212ff"
+    }
+}

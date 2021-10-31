@@ -18,5 +18,8 @@ menu.colors = {
     inactive_map = Color(22, 22, 22)
 }
 
+
 menu.colors.accent2 = ColorAlpha(menu.colors.accent1, 89)
 menu.colors.accent_dark = Color(math.max(menu.colors.accent1.r - 20, 0), math.max(menu.colors.accent1.g - 20, 0), math.max(menu.colors.accent1.b - 20, 0))
+
+menu.original_colors = table.Copy(menu.colors)

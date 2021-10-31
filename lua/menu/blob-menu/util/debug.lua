@@ -173,3 +173,8 @@ concommand.Add("vgui_menu_inspect", function(_,_,a)
 
     inspecting = false
 end )
+
+-- Read Cookies
+concommand.Add("blob_menu_dumpcookies", function()
+    _p(sql.Query("select * from cookies"))
+end )

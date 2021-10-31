@@ -4,7 +4,7 @@ local PANEL = {}
 function PANEL:Init()
     self.serverinfo = {}
     self.serverdata = {}
-    self.html = vgui.Create("DHTML", self)
+    self.html = vgui.Create("Menu:HTML", self)
     self.html:AddFunction("blob", "Join", function()
         JoinServer(self.serverdata.ip)
     end )
@@ -73,6 +73,10 @@ function PANEL:UpdateServer(args, svinfo)
         if self.serverinfo then
             self:UpdateHTML(self.serverinfo, args, self.playerhtml)
         end
+    end )
+
+    menu.themes.Watch(self, function(s)
+        self:UpdateHTML(self.serverinfo, args, self.playerhtml)
     end )
 end
 

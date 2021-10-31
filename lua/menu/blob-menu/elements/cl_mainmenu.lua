@@ -5,8 +5,10 @@ AccessorFunc(PANEL, "activepg", "ActivePage")
 function PANEL:Init()
     self.pages = {}
 
-    self.html = vgui.Create("DHTML", self)
-    self.html:SetHTML([[
+    self.html = vgui.Create("Menu:HTML", self)
+
+    function self.html:UpdateHTML()
+        self:SetHTML([[
         <style>
         ]] .. menu.html.BaseCSS() .. [[
 
@@ -32,6 +34,9 @@ function PANEL:Init()
         <div class="bottom"></div>
         <div class="bg">]] .. menu.backgrounds[menu.config.background] or menu.backgrounds["blob"] .. [[</div>
     ]])
+    end
+    self.html:UpdateHTML()
+    menu.themes.Watch(self.html, self.html.UpdateHTML)
 
     self.canvas = vgui.Create("Panel", self)
     self.topbar = vgui.Create("Menu:Topbar", self)

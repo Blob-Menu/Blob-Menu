@@ -2,6 +2,9 @@
 menu.html = menu.html or {}
 
 function menu.html.Color(col)
+    if isstring(col) then
+        return col
+    end
     return "rgba(" .. col.r .. ", " .. col.g .. ", " .. col.b .. ", " .. (col.a or 255) / 255 .. ")"
 end
 

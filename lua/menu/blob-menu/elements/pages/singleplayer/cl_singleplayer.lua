@@ -2,7 +2,7 @@
 local PANEL = {}
 
 function PANEL:Init()
-    self.maps = vgui.Create("DHTML", self)
+    self.maps = vgui.Create("Menu:HTML", self)
     self.options = vgui.Create("Menu:Singleplayer:Options", self)
 
     self.maps:AddFunction("blob", "SetMap", function(s)
@@ -21,6 +21,8 @@ function PANEL:Init()
     end )
 
     self:MapHTML()
+
+    menu.themes.Watch(self, self.MapHTML)
 end
 
 function PANEL:PerformLayout(w, h)
