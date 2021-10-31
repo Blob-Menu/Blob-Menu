@@ -61,7 +61,7 @@ function PANEL:AddButton(name, doclk)
             text = self.text,
             pos = {w / 2, h / 2 + 2},
             font = "Menu:Topbar",
-            color = menu.colors.timer_color,
+            color = menu.colors.text,
             xalign = 1,
             yalign = 1
         })
