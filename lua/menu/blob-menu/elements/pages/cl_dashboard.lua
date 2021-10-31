@@ -75,7 +75,7 @@ function PANEL:Init()
     end
 
     function self.center.buttons:InGameChanged(t)
-        self:SetTall(1)
+        self:SetTall(t and 50 or 1)
 
         for k,v in pairs(self:GetChildren()) do
             v:SetVisible(t)
