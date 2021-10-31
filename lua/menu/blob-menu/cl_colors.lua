@@ -11,11 +11,12 @@ menu.colors = {
     textentry_outline_selected = Color(255, 255, 255, 255 * .6),
     textentry_outline = Color(255, 255, 255, 255 * .3),
     server_background = Color(35,35,35,252),
+    gmod_color = Color(255, 255, 255),
+    timer_color = Color(255, 255, 255),
+
+    active_map = Color(255, 255, 255),
+    inactive_map = Color(22, 22, 22)
 }
 
 menu.colors.accent2 = ColorAlpha(menu.colors.accent1, 89)
 menu.colors.accent_dark = Color(math.max(menu.colors.accent1.r - 20, 0), math.max(menu.colors.accent1.g - 20, 0), math.max(menu.colors.accent1.b - 20, 0))
-
-menu.colors.gamemodes = {
-    DarkRP = Color(123, 2, 3),
-}

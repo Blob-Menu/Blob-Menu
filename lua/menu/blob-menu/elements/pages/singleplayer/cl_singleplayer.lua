@@ -108,6 +108,7 @@ function PANEL:MapHTML()
 
             cursor:pointer;
             user-select:none;
+            color:var(--inactive_map);
         }
 
         .header > .maps > .map.active {
@@ -115,8 +116,7 @@ function PANEL:MapHTML()
             height:146px;
             border:solid var(--accent) 2px;
             box-shadow: 0px 0px 6px var(--accent);
-            color:#FFF;
-
+            color:var(--active_map);
         }
 
         .header > .maps > .map > div {

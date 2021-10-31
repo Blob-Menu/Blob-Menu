@@ -41,7 +41,8 @@ function PANEL:AddButton(title, click)
             pos = {w / 2, h / 2},
             font = "Menu:BottomBarButtons",
             xalign = 1,
-            yalign = 1
+            yalign = 1,
+            color = menu.colors.text
         })
 
         if self.textW != tw then

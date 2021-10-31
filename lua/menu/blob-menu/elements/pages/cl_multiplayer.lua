@@ -51,7 +51,7 @@ function PANEL:Init()
             tab:DoSearch(s)
         end
     end )
-    self.top:SetHTML([[
+    self.top:SetHTML(menu.templates.Render([[
         <style>
             :root {
                 --accent:rgb(]] .. menu.colors.accent1.r .. "," .. menu.colors.accent1.g .. "," .. menu.colors.accent1.b .. [[);
@@ -203,7 +203,9 @@ function PANEL:Init()
                 document.getElementById(type).className = "active";
             }
         </script>
-    ]])
+    ]], {
+        base_style = menu.html.BaseCSS()
+    }))
 end
 
 function PANEL:PerformLayout(w,h)

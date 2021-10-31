@@ -34,7 +34,8 @@ function PANEL:Init()
             pos = menu.config.moving_garrysmod and {math.cos(CurTime() * 4) * 1, h / 2 + math.sin(CurTime() * 5) * 2} or {0, h / 2},
             xalign = 0,
             yalign = 1,
-            font = "Menu:Dashboard:Name"
+            font = "Menu:Dashboard:Name",
+            color = menu.colors.gmod_color
         })
 
         th = th + 20
@@ -69,7 +70,8 @@ function PANEL:Init()
                 pos = {w / 2, h / 2 + 1},
                 xalign = 1,
                 yalign = 1,
-                font = "Menu:Dashboard:Buttons"
+                font = "Menu:Dashboard:Buttons",
+                color = menu.colors.gmod_color
             })
         end
     end
