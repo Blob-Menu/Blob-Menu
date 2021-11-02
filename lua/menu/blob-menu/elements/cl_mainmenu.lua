@@ -119,5 +119,16 @@ function PANEL:PerformLayout(w, h)
     end
 end
 
+function PANEL:Think()
+    if input.IsKeyDown(KEY_LCONTROL) and input.IsKeyDown(KEY_LSHIFT) and input.IsKeyDown(KEY_R) then
+        if menu.RecentlyRefreshed then return end
+        menu.RecentlyRefreshed = true
+
+        RunConsoleCommand("blob_menu_refresh")
+    else
+        menu.RecentlyRefreshed = false
+    end
+end
+
 vgui.Register("Menu:MainPanel", PANEL, "Panel")
 menu.Refresh()
