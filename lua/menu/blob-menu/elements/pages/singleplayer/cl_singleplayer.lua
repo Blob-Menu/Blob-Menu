@@ -34,10 +34,6 @@ function PANEL:PerformLayout(w, h)
     self.options:SetPos(self.maps:GetWide(), 80)
 end
 
-function PANEL:Paint(w,h)
-
-end
-
 function PANEL:GenerateMapsHTML()
     local toret = ""
     for k,v in pairs(GetMapList()) do
