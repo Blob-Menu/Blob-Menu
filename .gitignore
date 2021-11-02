@@ -13,6 +13,7 @@ screenshots/
 scenes/
 materials/
 maps/
+models/
 
 lua/autorun/
 lua/bin
