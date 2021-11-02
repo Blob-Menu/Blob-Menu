@@ -96,6 +96,7 @@ function menu.Load()
 
         loadDirectory("menu/blob-menu")
         menu.Create()
+        hook.Run("MenuLoaded")
     else
         include("mainmenu.lua")
         include("menu_save.lua")

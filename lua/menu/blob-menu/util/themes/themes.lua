@@ -11,11 +11,11 @@ function menu.themes.UpdateList()
 end
 
 function menu.themes.GetTheme()
-    return menu.themes.list[cookie.GetString("blob_menu_theme", "default")] or menu.themes.list["default"]
+    return menu.themes.list[menu.options:Get("theme") or "default"] or menu.themes.list["default"]
 end
 
 function menu.themes.SetTheme(a)
-    cookie.Set("blob_menu_theme", a or "default")
+    menu.options:Set("theme", a)
 end
 
 function menu.themes.Update()

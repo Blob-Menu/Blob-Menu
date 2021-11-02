@@ -2,19 +2,19 @@
 menu.options = {}
 menu.options.cache = false
 
-function menu.options:Get(id)
-    self.Cache = self.Cache or menu.Cache("options")
+function menu.options.CookieName(id)
+    return "blob_menu_option_" .. id
+end
 
-    local got = self.Cache:Get(id)
+function menu.options:Get(id)
+    local got = cookie.GetString(self.CookieName(id))
     return menu.HexToColor(got) or tonumber(got) or got
 end
 
 function menu.options:Set(id, val)
-    self.Cache = self.Cache or menu.Cache("options")
-
     if IsColor(val) then
-        self.Cache:Set(id, menu.ToHex(val))
+        cookie.Set(self.CookieName(id), menu.ToHex(val))
     else
-        self.Cache:Set(id, val)
+        cookie.Set(self.CookieName(id), val)
     end
 end
