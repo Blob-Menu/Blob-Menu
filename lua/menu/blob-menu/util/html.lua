@@ -22,6 +22,10 @@ function menu.html.BaseCSS()
 
     return [[
         @import url("https://fonts.googleapis.com/css2?family=Poppins");
+        * {
+            transition:background-color 0.2s, color 0.2s, fill 0.2s;
+        }
+
         *::-webkit-scrollbar {
             width:7px;
             border-radius:4px;

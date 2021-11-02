@@ -27,16 +27,17 @@ function menu.themes.Update()
 
     for k,v in pairs(menu.themes.watches) do
         if IsValid(k) then
+            if not k.SetCSSVar then continue end
             for kk, col in pairs(menu.colors) do
                 if not IsColor(v) then continue end
                 k:SetCSSVar(kk, menu.html.Color(col))
             end
-        end
 
-        k:SetCSSVar("accent", menu.html.Color(menu.colors.accent1))
-        k:SetCSSVar("transparent", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)))
-        k:SetCSSVar("transparent-5", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)))
-        k:SetCSSVar("transparent-7", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .7)))
+            k:SetCSSVar("accent", menu.html.Color(menu.colors.accent1))
+            k:SetCSSVar("transparent", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)))
+            k:SetCSSVar("transparent-5", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)))
+            k:SetCSSVar("transparent-7", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .7)))
+        end
     end
 end
 
