@@ -45,9 +45,10 @@ function PANEL:Init()
         end
     end
 
+    self.center:DockPadding(0, 50, 0, 0)
     self.center.buttons = vgui.Create("Panel", self.center)
     self.center.buttons:Dock(TOP)
-    self.center.buttons:SetTall(IsInGame() and 50 or 0)
+    self.center.buttons:SetTall(50)
 
     function self.center.buttons:AddButton(name, on)
         local b = vgui.Create("DButton", self)
@@ -59,6 +60,10 @@ function PANEL:Init()
         b.DoClick = on
 
         function b:Paint(w,h)
+            if not IsInGame() then
+                return
+            end
+
             self.anim = Lerp(FrameTime() * 10, self.anim or 0, self:IsHovered() and h or 0)
 
             surface.SetDrawColor(menu.colors.accent1)
@@ -73,14 +78,6 @@ function PANEL:Init()
                 font = "Menu:Dashboard:Buttons",
                 color = menu.colors.gmod_color
             })
-        end
-    end
-
-    function self.center.buttons:InGameChanged(t)
-        self:SetTall(t and 50 or 1)
-
-        for k,v in pairs(self:GetChildren()) do
-            v:SetVisible(t)
         end
     end
 
