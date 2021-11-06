@@ -1,7 +1,7 @@
 
 menu = menu or {}
 menu.config = {
-    moving_garrysmod = false, -- Make the garry's mod text move a little bit
+    moving_garrysmod = true, -- Make the garry's mod text move a little bit
     background = "blob"
 }
 

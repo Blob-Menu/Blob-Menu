@@ -7,19 +7,19 @@
     "colors": {
         "accent_dark": "006eeaff",
         "text2": "d2d2d2ff",
-        "active_map": "ffffffff",
+        "active_map": "dddddd",
         "accent2": "0082fe59",
-        "active_underline": "ffffffff",
-        "background": "161616fe",
+        "active_underline": "dddddd",
+        "background": "101010fe",
         "textentry_outline_selected": "ffffff99",
-        "text": "ffffffff",
-        "timer_color": "ffffffff",
+        "text": "dddddd",
+        "timer_color": "dddddd",
         "textentry_outline": "ffffff4c",
         "server_background": "232323fc",
-        "bottom_bg": "00000028",
+        "bottom_bg": "151515",
         "accent1": "5f33fdff",
         "inactive_map": "161616ff",
-        "gmod_color": "ffffffff",
-        "shadow": "121212ff"
+        "gmod_color": "dddddd",
+        "shadow": "101010"
     }
 }

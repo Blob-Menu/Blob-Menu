@@ -22,7 +22,7 @@ function PANEL:Init()
 
     self:MapHTML()
 
-    menu.themes.Watch(self, self.MapHTML)
+    menu.themes.Watch(self.maps, true)
 end
 
 function PANEL:PerformLayout(w, h)
@@ -107,6 +107,8 @@ function PANEL:MapHTML()
             cursor:pointer;
             user-select:none;
             color:var(--inactive_map);
+
+            transition: color 0.1s;
         }
 
         .header > .maps > .map.active {
@@ -129,8 +131,6 @@ function PANEL:MapHTML()
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
-
     </style>
     <div class="map_root">
         {{maplist}}

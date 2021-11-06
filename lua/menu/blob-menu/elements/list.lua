@@ -9,14 +9,9 @@ AccessorFunc(PANEL, "active", "Active")
 
 function PANEL:Init()
     self.btns = {}
-
-    self:DockPadding(0, 50, 0, 0)
 end
 
 function PANEL:Paint(w,h)
-    -- surface.SetDrawColor(menu.colors.accent2)
-    -- surface.DrawRect(w - 1, 0, 1, h)
-
     local oc = DisableClipping(true)
     surface.SetDrawColor(menu.colors.shadow)
     surface.SetMaterial(menu.materials.left)
@@ -58,7 +53,7 @@ function PANEL:AddButton(name, on)
         surface.DrawRect(0, 0, self.olw, h)
 
         if (par.first != self) then
-            surface.SetDrawColor(menu.colors.accent2)
+            surface.SetDrawColor(menu.colors.accent1)
             surface.DrawRect(0, 0, w, 1)
         end
 

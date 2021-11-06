@@ -39,35 +39,11 @@ function PANEL:GenerateHTML()
             }
 
             .start {
-                display:flex;
-                flex-shrink: 0;
-                height:7%;
-   
-                margin:10px;
-                
-                background:linear-gradient(45deg, var(--accent1) 0%, var(--accent_dark) 100%);
-    
-                text-align:center;
-                font-size:30px;
-                border-radius:15px;
-    
-                user-select:none;
-                cursor:pointer;
-    
-                transition: text-shadow 0.2s;
-            }
-
-                
-            .start > .inner {
-                margin:auto;
-            }
-
-            .start:hover {
-                text-shadow: 2px 2px 5px #000;
+                margin-bottom:10px;
             }
         </style>
 
-        <div class="start" onclick="blob.Create()">
+        <div class="start button" onclick="blob.Create()">
             <div class="inner">
                 Start Game
             </div>

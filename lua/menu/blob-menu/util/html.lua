@@ -36,7 +36,32 @@ function menu.html.BaseCSS()
             width:5px;
             margin:1px;
             border-radius:4px;
-            background:var(--accent1);
+            background:var(--accent);
+        }
+        
+        .button {
+            display:flex;
+            flex-shrink: 0;
+
+            height:7%;
+            background:var(--accent);
+
+            text-align:center;
+            font-size:30px;
+            border-radius:15px;
+
+            user-select:none;
+            cursor:pointer;
+
+            transition: text-shadow 0.2s;
+        }
+
+        .button > .inner {
+            margin:auto;
+        }
+
+        .button:hover {
+            text-shadow: 2px 2px 5px #000;
         }
 
         :root{
@@ -44,12 +69,12 @@ function menu.html.BaseCSS()
             --accent-transparent:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)) .. [[;
             --accent-transparent-5:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)) .. [[;
             --accent-transparent-7:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .7)) .. [[;
+            --background-light:]] .. menu.html.Color(Color(math.max(menu.colors.background.r - 20, 0), math.max(menu.colors.background.g - 20, 0), math.max(menu.colors.background.b - 20, 0))) .. [[;
             ]] .. css .. [[
         }
         body {
             padding:0;
             margin:0;
         }
-
     ]]
 end

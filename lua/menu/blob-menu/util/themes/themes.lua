@@ -15,7 +15,9 @@ function menu.themes.GetTheme()
 end
 
 function menu.themes.SetTheme(a)
+    menu.themes.UpdateList()
     menu.options:Set("theme", a)
+    menu.themes.Update()
 end
 
 function menu.themes.Update()
@@ -29,26 +31,27 @@ function menu.themes.Update()
         if IsValid(k) then
             if not k.SetCSSVar then continue end
             for kk, col in pairs(menu.colors) do
-                if not IsColor(v) then continue end
+                if not istable(v) then continue end
                 k:SetCSSVar(kk, menu.html.Color(col))
             end
 
             k:SetCSSVar("accent", menu.html.Color(menu.colors.accent1))
-            k:SetCSSVar("transparent", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)))
-            k:SetCSSVar("transparent-5", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)))
-            k:SetCSSVar("transparent-7", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .7)))
+            k:SetCSSVar("accent-transparent", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)))
+            k:SetCSSVar("accent-transparent-5", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)))
+            k:SetCSSVar("accent-transparent-7", menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .7)))
+            k:SetCSSVar("background-light", menu.html.Color(
+                Color(math.max(menu.colors.background.r - 20, 0), math.max(menu.colors.background.g - 20, 0), math.max(menu.colors.background.b - 20, 0))
+            ))
         end
     end
 end
 
-function menu.themes.Watch(pnl, on)
-    menu.themes.watches[pnl] = on
+function menu.themes.Watch(pnl)
+    menu.themes.watches[pnl] = true
 end
 
-concommand.Add("settheme", function(_,_,a)
-    menu.themes.UpdateList()
+concommand.Add("blob_set_theme", function(_,_,a)
     menu.themes.SetTheme(a[1] or "default")
-    menu.themes.Update()
 end )
 
 menu.themes.UpdateList()

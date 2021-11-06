@@ -75,9 +75,7 @@ function PANEL:UpdateServer(args, svinfo)
         end
     end )
 
-    menu.themes.Watch(self, function(s)
-        self:UpdateHTML(self.serverinfo, args, self.playerhtml)
-    end )
+    menu.themes.Watch(self.html)
 end
 
 function PANEL:UpdateHTML(server, args, plyhtml)
@@ -105,7 +103,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             flex-grow:2;
             overflow: hidden;
             border-radius:15px;
-            background:{{background_col}};
+            background:var(--background);
         }
 
         .mid > .title {
@@ -139,7 +137,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             padding:15px;
             flex-grow:1;
             border-radius:15px;
-            background:{{background_col}};
+            background:var(--background);
             max-height:95%;
             display:flex;
             flex-direction:column;
@@ -178,31 +176,6 @@ function PANEL:UpdateHTML(server, args, plyhtml)
             margin-top:auto;
             margin-bottom:auto;
         }
-
-        .left > .join {
-            display:flex;
-            flex-shrink: 0;
-
-            height:7%;
-            background:linear-gradient(45deg, var(--accent1) 0%, var(--accent_dark) 100%);
-
-            text-align:center;
-            font-size:30px;
-            border-radius:15px;
-
-            user-select:none;
-            cursor:pointer;
-
-            transition: text-shadow 0.2s;
-        }
-
-        .left > .join > .inner {
-            margin:auto;
-        }
-
-        .left > .join:hover {
-            text-shadow: 2px 2px 5px #000;
-        }
     </style>
     
     <div class="left">
@@ -210,7 +183,7 @@ function PANEL:UpdateHTML(server, args, plyhtml)
         <div class="players">
             {{players}}
         </div>
-        <div class="join" onclick="blob.Join()">
+        <div class="join button" onclick="blob.Join()">
             <div class="inner">Join</div>
         </div>
     </div>
@@ -225,7 +198,6 @@ function PANEL:UpdateHTML(server, args, plyhtml)
         base_style = menu.html.BaseCSS(),
         server = server or {},
         args = args,
-        background_col = menu.html.Color(menu.colors.server_background),
         players = plyhtml
     }))
 end
