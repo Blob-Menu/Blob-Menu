@@ -178,3 +178,22 @@ end )
 concommand.Add("blob_menu_dumpcookies", function()
     _p(sql.Query("select * from cookies"))
 end )
+
+-- Test Panel
+menu.TestPanel_p = menu.TestPanel_p or false
+
+function menu.TestPanel(f)
+    if menu.TestPanel_p then
+        menu.TestPanel_p:Remove()
+    end
+
+    local p = vgui.Create("DFrame")
+    p:SetSize(600, 600)
+    p:Center()
+    p:MakePopup()
+    p:SetTitle("BlobMenu Test Panel - " .. debug.getinfo(2).short_src)
+
+    f(p)
+
+    menu.TestPanel_p = p
+end
