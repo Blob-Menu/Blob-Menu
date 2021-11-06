@@ -6,7 +6,7 @@ function menu.themes.UpdateList()
     menu.themes.list = {}
 
     for k,v in pairs(select(1, file.Find("menu/blob-menu/themes/*.json", "LuaMenu"))) do
-        menu.themes.list[string.StripExtension(v)] = util.JSONToTable(file.Read("menu/blob-menu/themes/" .. v, "LuaMenu") or "{'valid':false}") or {valid=false}
+        menu.themes.list[string.StripExtension(v)] = util.JSONToTable(file.Read("menu/blob-menu/themes/" .. v, "LuaMenu") or "{'valid':false}") or {valid = false}
     end
 end
 
