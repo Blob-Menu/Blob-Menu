@@ -65,6 +65,7 @@ function menu.html.BaseCSS()
         }
 
         :root{
+            --global-alpha:1;
             --accent:]] .. menu.html.Color(menu.colors.accent1) .. [[;
             --accent-transparent:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .3)) .. [[;
             --accent-transparent-5:]] .. menu.html.Color(ColorAlpha(menu.colors.accent1, 255 * .5)) .. [[;
@@ -75,6 +76,8 @@ function menu.html.BaseCSS()
         body {
             padding:0;
             margin:0;
+
+            opacity:var(--global-alpha);
         }
     ]]
 end

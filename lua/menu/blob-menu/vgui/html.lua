@@ -12,6 +12,24 @@ function PANEL:Init()
     self:AddFunction("blob", "setcssvar", function(...)
         self:SetCSSVar(...)
     end )
+
+    self.oldAlpha = self.SetAlpha
+
+end
+
+function PANEL:OnDocumentReady()
+    self.ready = true
+end
+
+function PANEL:Think()
+    if not self.ready then return end
+    self.oldalpha = self.oldalpha or self:GetParent():GetAlpha()
+    local a = self:GetParent():GetAlpha()
+
+    if self.oldalpha == a then return end
+    self.oldalpha = a
+
+    self:SetCSSVar("global-alpha", a / 255)
 end
 
 function PANEL:InjectCSS(css)
@@ -28,6 +46,7 @@ function PANEL:SetCSSVar(name, val)
         document.documentElement.style.setProperty("--]] .. name .. [[", "]] .. val .. [[");
     ]])
 end
+
 
 vgui.Register("Menu:HTML", PANEL, "DHTML")
 
