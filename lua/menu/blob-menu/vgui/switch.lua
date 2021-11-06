@@ -47,10 +47,8 @@ end
 
 vgui.Register("Menu:Switch", PANEL, "DButton")
 
-menu.TestPanel(function(p)
-    local f = vgui.Create("Menu:Switch", p)
-    f:SetSize(70, 30)
-    f:Center()
-end )
-
-print(123)
+-- menu.TestPanel(function(p)
+--     local f = vgui.Create("Menu:Switch", p)
+--     f:SetSize(70, 30)
+--     f:Center()
+-- end )
