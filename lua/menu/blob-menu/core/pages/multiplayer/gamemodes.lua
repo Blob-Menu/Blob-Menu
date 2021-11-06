@@ -144,8 +144,8 @@ function PANEL:Generate_lan()
     local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
     local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
 
-    function self.tabs:OnChanged()
-        menu.multiplayer:ShowBackButton("lan", true)
+    function self.tabs:OnChanged(t)
+        menu.multiplayer:ShowBackButton("lan", t == "activeserver")
         menu.multiplayer:ShowSearch("lan", false)
     end
 
@@ -165,6 +165,7 @@ function PANEL:Generate_lan()
     })
 
     function self:DoBack(t)
+        menu.multiplayer:ShowBackButton("lan", false)
         self.tabs:SetTab("servers")
         return false
     end
@@ -177,8 +178,8 @@ function PANEL:Generate_history(tab)
     local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
     local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
 
-    function self.tabs:OnChanged()
-        menu.multiplayer:ShowBackButton("history", true)
+    function self.tabs:OnChanged(t)
+        menu.multiplayer:ShowBackButton("history", t == "activeserver")
         menu.multiplayer:ShowSearch("history", false)
     end
 
@@ -198,6 +199,7 @@ function PANEL:Generate_history(tab)
     })
 
     function self:DoBack(t)
+        menu.multiplayer:ShowBackButton("history", false)
         self.tabs:SetTab("servers")
         return false
     end
@@ -210,8 +212,8 @@ function PANEL:Generate_favorite(tab)
     local svs = self.tabs:AddTab("servers", "Menu:Pages:Multiplayer:ServersList")
     local act = self.tabs:AddTab("activeserver", "Menu:Pages:Multiplayer:ActiveServer")
 
-    function self.tabs:OnChanged()
-        menu.multiplayer:ShowBackButton("favorite", true)
+    function self.tabs:OnChanged(t)
+        menu.multiplayer:ShowBackButton("favorite", t == "activeserver")
         menu.multiplayer:ShowSearch("favorite", false)
     end
 
@@ -231,6 +233,7 @@ function PANEL:Generate_favorite(tab)
     })
 
     function self:DoBack(t)
+        menu.multiplayer:ShowBackButton("favorite", false)
         self.tabs:SetTab("servers")
         return false
     end
